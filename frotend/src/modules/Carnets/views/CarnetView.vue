@@ -1,4 +1,5 @@
 <template>
+  <Navbar />
   <div class="flex flex-col h-screen bg-gray-50 overflow-hidden">
     <div class="p-4 bg-white border-b shadow-sm flex justify-between items-center no-print">
       <div class="flex items-center space-x-6">
@@ -25,6 +26,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import Navbar from '@/components/sirpef/navbar.vue';
 import CarnetForm from '../components/CarnetForm.vue';
 import CarnetPreview from '../components/CarnetPreview.vue';
 import { alerta } from '@/utils/alert';

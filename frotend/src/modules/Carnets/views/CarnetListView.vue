@@ -1,4 +1,5 @@
 <template>
+  <Navbar />
   <Welcome title="Listado de Carnets" subtitle="Gestión de carnets emitidos">
     <div class="flex justify-center">
         <router-link to="/carnets/form" class="bg-[#ECA008] hover:bg-[#010c41] text-white font-bold py-3 px-8 rounded-3xl transition-all shadow-lg flex items-center">
@@ -34,6 +35,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import Navbar from '@/components/sirpef/navbar.vue';
 import Welcome from "@/components/sirpef/welcome.vue";
 
 const carnets = ref([]);
