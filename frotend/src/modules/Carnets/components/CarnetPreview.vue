@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data" class="carnet-paper bg-white print:shadow-none mx-auto text-black text-[10pt] font-arial leading-snug w-[5.4cm] h-[8.5cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden">
+  <div v-if="data" class="carnet-paper bg-white print:shadow-none mx-auto text-black text-[10pt] font-arial leading-snug w-[216px] h-[334px] border rounded-lg relative flex flex-col shadow-md overflow-hidden">
     <!-- Background Image (Top Half) -->
     <div v-if="data && data.bg_img" class="absolute top-0 left-0 w-full h-1/2 z-0">
       <img :src="data.bg_img" class="w-full h-full object-cover" />
