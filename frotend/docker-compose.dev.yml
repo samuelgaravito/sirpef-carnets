@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+ sirpef_vue_dev_8001:    
+    image: node:18.8.0
+    ports:
+      - "8001:81"
+    volumes:
+      - ".:/app"
+    environment:
+      NODE_ENV: development
+    working_dir: /app
+    container_name: sirpef_vue_dev_8001
+    command: sh -c "cd /app; npm install; npm run dev -- --host"

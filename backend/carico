@@ -1,0 +1,1 @@
+docker exec -it sirpef_laravel_dev php -i | grep -E 'upload_max_filesize|post_max_size'
