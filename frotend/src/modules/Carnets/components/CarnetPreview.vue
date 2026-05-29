@@ -23,6 +23,9 @@
         <div class="text-[10px] font-bold text-gray-600 leading-none">
           {{ data.cargo || 'Cargo que ostenta' }}
         </div>
+        <div class="text-[9px] font-bold text-gray-500 mt-1">
+          C.I. {{ data.cedula || 'V-00.000.000' }}
+        </div>
       </div>
 
       <!-- Footer Logo Area -->
