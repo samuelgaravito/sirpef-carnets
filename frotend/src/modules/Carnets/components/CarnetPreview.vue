@@ -1,7 +1,7 @@
 <template>
-  <div class="carnet-paper bg-white print:shadow-none mx-auto text-black text-[10pt] font-arial leading-snug w-[5.4cm] h-[8.5cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden">
+  <div v-if="data" class="carnet-paper bg-white print:shadow-none mx-auto text-black text-[10pt] font-arial leading-snug w-[5.4cm] h-[8.5cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden">
     <!-- Background Image (Top Half) -->
-    <div v-if="data.bg_img" class="absolute top-0 left-0 w-full h-1/2 z-0">
+    <div v-if="data && data.bg_img" class="absolute top-0 left-0 w-full h-1/2 z-0">
       <img :src="data.bg_img" class="w-full h-full object-cover" />
     </div>
 
@@ -9,7 +9,7 @@
     <div class="relative z-10 flex flex-col items-center h-full p-4">
       <!-- Photo centered -->
       <div class="mt-8 mb-4">
-        <div v-if="data.foto_img" class="w-24 h-32 border-2 border-white shadow-lg overflow-hidden bg-white">
+        <div v-if="data && data.foto_img" class="w-24 h-32 border-2 border-white shadow-lg overflow-hidden bg-white">
           <img :src="data.foto_img" class="w-full h-full object-cover" />
         </div>
         <div v-else class="w-24 h-32 bg-gray-200 border-2 border-white shadow-lg flex items-center justify-center text-[10px] text-gray-400">FOTO</div>

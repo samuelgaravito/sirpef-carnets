@@ -34,7 +34,9 @@ import { alerta } from '@/utils/alert';
 const carnetData = ref({
   cedula: '',
   solicitante: '',
-  fecha_vencimiento: ''
+  fecha_vencimiento: '',
+  foto_img: null,
+  bg_img: null
 });
 
 const printCarnet = () => {
