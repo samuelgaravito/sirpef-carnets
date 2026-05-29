@@ -35,7 +35,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import Navbar from '@/components/sirpef/navbar.vue';
 import Welcome from "@/components/sirpef/welcome.vue";
 
 const carnets = ref([]);
