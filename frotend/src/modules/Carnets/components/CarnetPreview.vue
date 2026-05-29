@@ -9,10 +9,10 @@
     <div class="relative z-10 flex flex-col items-center h-full">
       <!-- Photo centered -->
       <div class="mt-32 mb-6">
-        <div v-if="data && data.foto_img" class="w-32 h-40 rounded-2xl shadow-xl overflow-hidden bg-white">
+        <div v-if="data && data.foto_img" class="w-[82px] h-[90px] rounded-2xl shadow-xl overflow-hidden bg-white">
           <img :src="data.foto_img" class="w-full h-full object-cover" />
         </div>
-        <div v-else class="w-32 h-40 bg-gray-200 rounded-2xl shadow-xl flex items-center justify-center text-[10px] text-gray-400">FOTO</div>
+        <div v-else class="w-[82px] h-[90px] bg-gray-200 rounded-2xl shadow-xl flex items-center justify-center text-[10px] text-gray-400">FOTO</div>
       </div>
 
       <!-- Data below photo -->
