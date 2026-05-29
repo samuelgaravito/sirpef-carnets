@@ -11,6 +11,7 @@ import SirpefRoutes from "@/modules/SIRPEF/routes"
 import AutorizadosRoutes from "@/modules/Autorizados/routes"
 import feDeVidaRoutes from "@/modules/FeDeVida/routes"
 import PrescolarRoutes from "@/modules/Prescolar/routes"
+import CarnetRoutes from "@/modules/Carnets/router"
 
 const storeAuth = computed(() => useAuthStore())
 
@@ -41,7 +42,8 @@ const routes: Array<RouteRecordRaw> = [
   ...SirpefRoutes.map(route => route),
   ...AutorizadosRoutes.map(route => route),
   ...feDeVidaRoutes.map(route => route),
-  ...PrescolarRoutes.map(route => route)
+  ...PrescolarRoutes.map(route => route),
+  ...CarnetRoutes.map(route => route)
 ]
 
 const router = createRouter({
