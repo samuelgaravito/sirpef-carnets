@@ -43,6 +43,12 @@
           <label class="block text-[10px] font-bold text-gray-700 uppercase mb-2">Foto del Carnet</label>
           <input type="file" @change="handleImage($event, 'foto')" class="block w-full text-xs text-gray-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700" />
         </div>
+
+        <div class="p-3 bg-white rounded border">
+          <label class="block text-[10px] font-bold text-gray-700 uppercase mb-2">Fondo Superior</label>
+          <input type="file" @change="handleImage($event, 'bg')" class="block w-full text-xs text-gray-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700" />
+          <p class="text-[9px] text-gray-400 mt-1">Imagen que ocupará la mitad superior del carnet.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -64,6 +70,7 @@ const handleImage = (event, type) => {
     reader.onload = (e) => {
       const base64String = e.target.result;
       if (type === 'foto') props.form.foto_img = base64String;
+      if (type === 'bg') props.form.bg_img = base64String;
     };
     reader.readAsDataURL(file);
   }
