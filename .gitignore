@@ -1,13 +1,13 @@
 .aider*
 # Dependencias de PHP (Composer)
-sirpef_laravel/vendor/
+backend/vendor/
 
 *.tar.gz
 *.log
 sirpef_laravel/storage/logs/
 
 # Dependencias de JavaScript (Node)
-sirpef_vue/node_modules/
+frotend/node_modules/
 npm-debug.log
 yarn-error.log
 
