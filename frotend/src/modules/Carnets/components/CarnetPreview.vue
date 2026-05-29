@@ -1,14 +1,14 @@
 <template>
   <div v-if="data" class="carnet-paper bg-white print:shadow-none mx-auto text-black text-[10pt] font-arial leading-snug w-[216px] h-[334px] border rounded-lg relative flex flex-col shadow-md overflow-hidden">
     <!-- Background Image (Top Half) -->
-    <div v-if="data && data.bg_img" class="absolute top-0 left-0 w-full h-1/2 z-0">
+    <div v-if="data && data.bg_img" class="absolute -top-4 left-0 w-full h-[55%] z-0">
       <img :src="data.bg_img" class="w-full h-full object-cover" />
     </div>
 
     <!-- Content Container -->
     <div class="relative z-10 flex flex-col items-center h-full">
       <!-- Photo centered -->
-      <div class="mt-32 mb-6">
+      <div class="mt-24 mb-6">
         <div v-if="data && data.foto_img" class="w-[82px] h-[90px] rounded-2xl shadow-xl overflow-hidden bg-white">
           <img :src="data.foto_img" class="w-full h-full object-cover" />
         </div>
@@ -16,21 +16,21 @@
       </div>
 
       <!-- Data below photo -->
-      <div class="text-center w-full px-4 mb-8">
-        <div class="text-2xl font-black text-[#1e3a8a] uppercase leading-tight tracking-tighter mb-1">
+      <div class="text-center w-full px-4 mb-4">
+        <div class="text-xl font-black text-[#1e3a8a] uppercase leading-tight tracking-tighter mb-1">
           {{ data.solicitante || 'NOMBRE APELLIDO' }}
         </div>
-        <div class="text-sm font-bold text-gray-600 leading-none">
+        <div class="text-[10px] font-bold text-gray-600 leading-none">
           {{ data.cargo || 'Cargo que ostenta' }}
         </div>
       </div>
 
       <!-- Footer Logo Area -->
-      <div class="mt-auto w-full px-6 pb-6">
+      <div class="mt-auto w-full px-4 pb-8">
         <div v-if="data.footer_img">
-          <img :src="data.footer_img" class="w-full h-auto" />
+          <img :src="data.footer_img" class="w-full h-auto max-h-16 object-contain" />
         </div>
-        <div v-else class="w-full h-12 border-t flex items-center justify-center text-[8px] text-gray-300 italic uppercase">
+        <div v-else class="w-full h-16 border-t flex items-center justify-center text-[8px] text-gray-300 italic uppercase">
           Logo Institucional
         </div>
       </div>
