@@ -3,7 +3,10 @@
     <!-- Carnet layout implementation -->
     <div class="flex h-full">
       <div class="w-1/3 flex flex-col items-center justify-center border-r p-1">
-        <div class="w-16 h-20 bg-gray-200 border border-gray-300 flex items-center justify-center text-[8px] text-gray-400">FOTO</div>
+        <div v-if="data.foto_img" class="w-full h-full flex items-center justify-center overflow-hidden">
+          <img :src="data.foto_img" class="w-full h-auto object-cover" />
+        </div>
+        <div v-else class="w-16 h-20 bg-gray-200 border border-gray-300 flex items-center justify-center text-[8px] text-gray-400">FOTO</div>
       </div>
       <div class="w-2/3 p-2 flex flex-col justify-between">
         <div>
