@@ -6,29 +6,38 @@
     </div>
 
     <!-- Content Container -->
-    <div class="relative z-10 flex flex-col items-center h-full p-4">
+    <div class="relative z-10 flex flex-col items-center h-full">
       <!-- Photo centered -->
-      <div class="mt-8 mb-4">
-        <div v-if="data && data.foto_img" class="w-24 h-32 border-2 border-white shadow-lg overflow-hidden bg-white">
+      <div class="mt-32 mb-6">
+        <div v-if="data && data.foto_img" class="w-32 h-40 rounded-2xl shadow-xl overflow-hidden bg-white">
           <img :src="data.foto_img" class="w-full h-full object-cover" />
         </div>
-        <div v-else class="w-24 h-32 bg-gray-200 border-2 border-white shadow-lg flex items-center justify-center text-[10px] text-gray-400">FOTO</div>
+        <div v-else class="w-32 h-40 bg-gray-200 rounded-2xl shadow-xl flex items-center justify-center text-[10px] text-gray-400">FOTO</div>
       </div>
 
       <!-- Data below photo -->
-      <div class="text-center w-full space-y-2">
-        <div>
-          <div class="text-[9px] font-bold uppercase text-blue-800 leading-none">CÉDULA DE IDENTIDAD</div>
-          <div class="text-sm font-bold">{{ data.cedula || 'V-00.000.000' }}</div>
+      <div class="text-center w-full px-4 mb-8">
+        <div class="text-2xl font-black text-[#1e3a8a] uppercase leading-tight tracking-tighter mb-1">
+          {{ data.solicitante || 'NOMBRE APELLIDO' }}
         </div>
-        <div>
-          <div class="text-[9px] font-bold uppercase text-blue-800 leading-none">NOMBRES Y APELLIDOS</div>
-          <div class="text-xs font-bold leading-tight uppercase px-2">{{ data.solicitante || 'NOMBRE COMPLETO' }}</div>
+        <div class="text-sm font-bold text-gray-600 leading-none">
+          {{ data.cargo || 'Cargo que ostenta' }}
         </div>
       </div>
 
-      <!-- Footer -->
-      <div class="mt-auto text-[8px] text-gray-500 italic">Válido hasta: {{ data.fecha_vencimiento || '00/00/0000' }}</div>
+      <!-- Footer Logo Area -->
+      <div class="mt-auto w-full px-6 pb-6">
+        <div v-if="data.footer_img">
+          <img :src="data.footer_img" class="w-full h-auto" />
+        </div>
+        <div v-else class="w-full h-12 border-t flex items-center justify-center text-[8px] text-gray-300 italic uppercase">
+          Logo Institucional
+        </div>
+      </div>
+      
+      <div class="absolute bottom-1 right-2 text-[6px] text-gray-400 font-bold">
+        Vence: {{ data.fecha_vencimiento || '00/00/0000' }}
+      </div>
     </div>
   </div>
 </template>
@@ -45,7 +54,7 @@ const props = defineProps({
 
 <style scoped>
 .carnet-paper {
-  font-family: Arial, Helvetica, sans-serif !important;
+  font-family: 'Arial Black', Arial, Helvetica, sans-serif !important;
 }
 @media print {
   .carnet-paper {
