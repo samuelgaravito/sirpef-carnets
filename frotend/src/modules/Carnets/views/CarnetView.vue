@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col h-screen bg-gray-50 overflow-hidden">
-    <Navbar class="no-print" />
+  <Navbar class="no-print" />
+  <div class="flex flex-col h-[calc(100-navbar)] bg-gray-50 overflow-hidden">
     <div class="p-4 bg-white border-b shadow-sm flex justify-between items-center no-print">
       <div class="flex items-center space-x-6">
         <h1 class="text-xl font-bold text-gray-800">Generador de Carnets</h1>
