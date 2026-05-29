@@ -33,9 +33,13 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 const props = defineProps({
-  data: Object
+  data: {
+    type: Object,
+    required: true,
+    default: () => ({})
+  }
 });
 </script>
 
