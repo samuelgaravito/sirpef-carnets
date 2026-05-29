@@ -1,7 +1,7 @@
 <template>
   <Welcome title="Listado de Carnets" subtitle="Gestión de carnets emitidos">
     <div class="flex justify-center">
-        <router-link to="/oac/carnets/form" class="bg-[#ECA008] hover:bg-[#010c41] text-white font-bold py-3 px-8 rounded-3xl transition-all shadow-lg flex items-center">
+        <router-link to="/carnets/form" class="bg-[#ECA008] hover:bg-[#010c41] text-white font-bold py-3 px-8 rounded-3xl transition-all shadow-lg flex items-center">
           <font-awesome-icon icon="plus" class="mr-2" />
           Nuevo Carnet
         </router-link>

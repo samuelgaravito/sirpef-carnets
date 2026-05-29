@@ -1,6 +1,6 @@
 export default [
     {
-        path: '/oac/carnets',
+        path: '/carnets',
         name: 'carnets-list',
         component: () => import('../views/CarnetListView.vue'),
         meta: {
@@ -9,7 +9,7 @@ export default [
         }
     },
     {
-        path: '/oac/carnets/form',
+        path: '/carnets/form',
         name: 'carnets-form',
         component: () => import('../views/CarnetView.vue'),
         meta: {
