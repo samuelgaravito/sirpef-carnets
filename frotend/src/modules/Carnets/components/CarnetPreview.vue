@@ -122,16 +122,11 @@ const props = defineProps({
     visibility: visible;
   }
   .print-area {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 1rem !important;
+    width: 100%;
+    display: block !important;
     background: white !important;
     z-index: 9999;
     margin: 0 !important;
@@ -140,10 +135,19 @@ const props = defineProps({
   .origin-top {
     transform: none !important;
     margin-bottom: 0 !important;
+    display: block !important;
   }
   .carnet-paper {
     box-shadow: none !important;
     border: 1px solid #ccc !important;
+    margin: 0 auto !important;
+    page-break-after: always;
+    break-after: page;
+  }
+  /* Remove page break from the last element to avoid empty page */
+  .carnet-paper:last-child {
+    page-break-after: auto;
+    break-after: auto;
   }
 }
 </style>
