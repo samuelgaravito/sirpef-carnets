@@ -1,7 +1,7 @@
 <template>
-  <div v-if="data" class="flex flex-col gap-8 print:gap-0">
+  <div v-if="data" class="flex flex-row flex-wrap justify-center gap-8 print:gap-4">
     <!-- ANVERSO -->
-    <div class="carnet-paper bg-white print:shadow-none mx-auto text-black text-[10pt] font-arial leading-snug w-[216px] h-[334px] border rounded-lg relative flex flex-col shadow-md overflow-hidden">
+    <div class="carnet-paper bg-white print:shadow-none text-black text-[10pt] font-arial leading-snug w-[216px] h-[334px] border rounded-lg relative flex flex-col shadow-md overflow-hidden">
       <!-- Background Image (Top Half) -->
       <div v-if="data && data.bg_img" class="absolute -top-4 left-0 w-full h-[55%] z-0">
         <img :src="data.bg_img" class="w-full h-full object-cover" />
@@ -50,7 +50,7 @@
     </div>
 
     <!-- REVERSO -->
-    <div class="carnet-paper bg-white print:shadow-none mx-auto text-black text-[10pt] font-arial leading-snug w-[216px] h-[334px] border rounded-lg relative flex flex-col shadow-md overflow-hidden print:mt-4 p-4">
+    <div class="carnet-paper bg-white print:shadow-none text-black text-[10pt] font-arial leading-snug w-[216px] h-[334px] border rounded-lg relative flex flex-col shadow-md overflow-hidden p-4">
       
       <!-- Top Paragraph -->
       <div class="relative z-10 text-[7px] text-justify leading-tight text-gray-700 mb-auto whitespace-pre-wrap">
