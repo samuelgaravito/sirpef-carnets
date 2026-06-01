@@ -53,7 +53,7 @@
     <div class="carnet-paper bg-white print:shadow-none mx-auto text-black text-[10pt] font-arial leading-snug w-[216px] h-[334px] border rounded-lg relative flex flex-col shadow-md overflow-hidden print:mt-4 p-4">
       
       <!-- Top Paragraph -->
-      <div class="relative z-10 text-[7px] text-justify leading-tight text-gray-700 mb-auto">
+      <div class="relative z-10 text-[7px] text-justify leading-tight text-gray-700 mb-auto whitespace-pre-wrap">
         {{ data.reverso_texto_superior || 'Información institucional superior del reverso.' }}
       </div>
 
@@ -69,7 +69,7 @@
       </div>
       
       <!-- Bottom Paragraph -->
-      <div class="relative z-10 text-[7px] text-justify leading-tight text-gray-700 mt-auto">
+      <div class="relative z-10 text-[7px] text-justify leading-tight text-gray-700 mt-auto whitespace-pre-wrap">
         {{ data.reverso_texto_inferior || 'Este carnet es personal e intransferible. Su uso indebido será sancionado. En caso de extravío favor devolverlo a la oficina de recursos humanos.' }}
       </div>
     </div>
