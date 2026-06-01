@@ -63,8 +63,8 @@
           <img :src="data.reverso_sello_img" class="w-full h-auto object-contain" />
         </div>
         
-        <div v-if="data.reverso_firma_img" class="flex flex-col items-center">
-          <img :src="data.reverso_firma_img" class="w-32 h-auto" />
+        <div v-if="data.reverso_firma_img" class="flex flex-col items-center w-full">
+          <img :src="data.reverso_firma_img" class="w-44 h-auto" />
         </div>
       </div>
       
