@@ -41,6 +41,14 @@
           <label class="text-[10px] font-bold text-gray-500">FECHA DE VENCIMIENTO</label>
           <input v-model="form.fecha_vencimiento" type="date" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" />
         </div>
+        <div class="flex flex-col">
+          <label class="text-[10px] font-bold text-gray-500">TEXTO SUPERIOR REVERSO</label>
+          <textarea v-model="form.reverso_texto_superior" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none" rows="2"></textarea>
+        </div>
+        <div class="flex flex-col">
+          <label class="text-[10px] font-bold text-gray-500">TEXTO INFERIOR REVERSO</label>
+          <textarea v-model="form.reverso_texto_inferior" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none" rows="2"></textarea>
+        </div>
       </div>
     </div>
 
@@ -74,9 +82,9 @@
       
       <div class="space-y-4">
         <div class="p-3 bg-white rounded border">
-          <label class="block text-[10px] font-bold text-gray-700 uppercase mb-2">Fondo Reverso</label>
-          <input type="file" @change="handleImage($event, 'reverso_bg')" class="block w-full text-xs text-gray-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700" />
-          <p class="text-[9px] text-gray-400 mt-1">Imagen de fondo para la parte posterior.</p>
+          <label class="block text-[10px] font-bold text-gray-700 uppercase mb-2">Sello Institucional (Reverso)</label>
+          <input type="file" @change="handleImage($event, 'reverso_sello')" class="block w-full text-xs text-gray-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700" />
+          <p class="text-[9px] text-gray-400 mt-1">Imagen del sello que irá en el centro del reverso.</p>
         </div>
 
         <div class="p-3 bg-white rounded border">
@@ -106,7 +114,7 @@ const handleImage = (event, type) => {
       if (type === 'foto') props.form.foto_img = base64String;
       if (type === 'bg') props.form.bg_img = base64String;
       if (type === 'footer') props.form.footer_img = base64String;
-      if (type === 'reverso_bg') props.form.reverso_bg_img = base64String;
+      if (type === 'reverso_sello') props.form.reverso_sello_img = base64String;
       if (type === 'reverso_firma') props.form.reverso_firma_img = base64String;
     };
     reader.readAsDataURL(file);

@@ -47,20 +47,28 @@
     </div>
 
     <!-- REVERSO -->
-    <div class="carnet-paper bg-white print:shadow-none mx-auto text-black text-[10pt] font-arial leading-snug w-[216px] h-[334px] border rounded-lg relative flex flex-col shadow-md overflow-hidden print:mt-4">
-      <div v-if="data.reverso_bg_img" class="absolute inset-0 z-0">
-        <img :src="data.reverso_bg_img" class="w-full h-full object-cover" />
+    <div class="carnet-paper bg-white print:shadow-none mx-auto text-black text-[10pt] font-arial leading-snug w-[216px] h-[334px] border rounded-lg relative flex flex-col shadow-md overflow-hidden print:mt-4 p-4">
+      
+      <!-- Top Paragraph -->
+      <div class="relative z-10 text-[7px] text-justify leading-tight text-gray-700 mb-auto">
+        {{ data.reverso_texto_superior || 'Información institucional superior del reverso.' }}
       </div>
 
-      <div class="relative z-10 flex flex-col items-center h-full justify-center p-4">
-        <div v-if="data.reverso_firma_img" class="mb-2">
-          <img :src="data.reverso_firma_img" class="w-24 h-auto" />
-          <div class="border-t border-black text-[8px] font-bold text-center mt-1 uppercase">Firma Autorizada</div>
+      <!-- Middle Content (Sello and Firma) -->
+      <div class="relative z-10 flex flex-col items-center justify-center gap-4 flex-1">
+        <div v-if="data.reverso_sello_img" class="w-16 h-auto">
+          <img :src="data.reverso_sello_img" class="w-full h-auto object-contain" />
         </div>
         
-        <div class="mt-4 text-[7px] text-justify leading-tight text-gray-700">
-          Este carnet es personal e intransferible. Su uso indebido será sancionado. En caso de extravío favor devolverlo a la oficina de recursos humanos.
+        <div v-if="data.reverso_firma_img" class="flex flex-col items-center">
+          <img :src="data.reverso_firma_img" class="w-20 h-auto" />
+          <div class="border-t border-black w-24 text-[6px] font-bold text-center mt-1 uppercase">Firma Autorizada</div>
         </div>
+      </div>
+      
+      <!-- Bottom Paragraph -->
+      <div class="relative z-10 text-[7px] text-justify leading-tight text-gray-700 mt-auto">
+        {{ data.reverso_texto_inferior || 'Este carnet es personal e intransferible. Su uso indebido será sancionado. En caso de extravío favor devolverlo a la oficina de recursos humanos.' }}
       </div>
     </div>
   </div>

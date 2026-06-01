@@ -33,9 +33,15 @@ import { alerta } from '@/utils/alert';
 const carnetData = ref({
   cedula: '',
   solicitante: '',
+  cargo: '',
   fecha_vencimiento: '',
   foto_img: null,
-  bg_img: null
+  bg_img: null,
+  footer_img: null,
+  reverso_sello_img: null,
+  reverso_firma_img: null,
+  reverso_texto_superior: '',
+  reverso_texto_inferior: ''
 });
 
 const printCarnet = () => {
