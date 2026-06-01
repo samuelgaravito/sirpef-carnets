@@ -59,13 +59,12 @@
 
       <!-- Middle Content (Sello and Firma) -->
       <div class="relative z-10 flex flex-col items-center justify-center gap-4 flex-1">
-        <div v-if="data.reverso_sello_img" class="w-16 h-auto">
+        <div v-if="data.reverso_sello_img" class="w-14 h-auto">
           <img :src="data.reverso_sello_img" class="w-full h-auto object-contain" />
         </div>
         
         <div v-if="data.reverso_firma_img" class="flex flex-col items-center">
-          <img :src="data.reverso_firma_img" class="w-20 h-auto" />
-          <div class="border-t border-black w-24 text-[6px] font-bold text-center mt-1 uppercase">Firma Autorizada</div>
+          <img :src="data.reverso_firma_img" class="w-32 h-auto" />
         </div>
       </div>
       
