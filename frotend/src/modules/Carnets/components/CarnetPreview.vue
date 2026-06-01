@@ -22,11 +22,14 @@
           <div class="text-xl font-black text-[#1e3a8a] uppercase leading-tight tracking-tighter mb-1">
             {{ data.solicitante || 'NOMBRE APELLIDO' }}
           </div>
-          <div class="text-[10px] font-bold text-gray-600 leading-none">
-            {{ data.cargo || 'Cargo que ostenta' }}
-          </div>
           <div class="text-[9px] font-bold text-gray-500 mt-1">
             C.I. {{ data.cedula || 'V-00.000.000' }}
+          </div>
+          <div class="text-[10px] font-bold text-gray-600 leading-none mt-1">
+            {{ data.cargo || 'Cargo que ostenta' }}
+          </div>
+          <div class="text-[9px] font-bold text-gray-600 leading-none mt-1">
+            {{ data.oficina || 'Oficina / Unidad' }}
           </div>
         </div>
 
