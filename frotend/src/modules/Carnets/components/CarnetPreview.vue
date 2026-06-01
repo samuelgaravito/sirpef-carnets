@@ -122,13 +122,20 @@ const props = defineProps({
     visibility: visible;
   }
   .print-area {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
     display: flex !important;
+    flex-direction: row !important;
     justify-content: center !important;
+    align-items: center !important;
     gap: 1rem !important;
+    background: white !important;
+    z-index: 9999;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   .origin-top {
     transform: none !important;
