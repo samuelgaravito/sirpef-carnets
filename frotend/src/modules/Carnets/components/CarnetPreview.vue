@@ -1,6 +1,25 @@
 <template>
-  <div v-if="data" class="flex flex-row flex-wrap justify-center gap-8 print:gap-4">
-    <!-- ANVERSO -->
+  <div v-if="data" class="flex flex-col items-center">
+    <!-- Zoom Controls -->
+    <div class="mb-4 flex items-center gap-4 bg-gray-100 p-2 rounded-lg border print:hidden">
+      <span class="text-xs font-bold text-gray-600 uppercase">Zoom Vista:</span>
+      <input 
+        type="range" 
+        v-model="zoom" 
+        min="0.5" 
+        max="2" 
+        step="0.1" 
+        class="w-32 h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer"
+      />
+      <span class="text-xs font-mono w-10 text-center">{{ Math.round(zoom * 100) }}%</span>
+      <button @click="zoom = 1" class="text-[10px] bg-white px-2 py-1 border rounded shadow-sm hover:bg-gray-50">Reset</button>
+    </div>
+
+    <div 
+      class="flex flex-row flex-wrap justify-center gap-8 print:gap-4 transition-transform duration-200 origin-top"
+      :style="{ transform: `scale(${zoom})`, marginBottom: zoom > 1 ? `${(zoom - 1) * 334}px` : '0' }"
+    >
+      <!-- ANVERSO -->
     <div class="carnet-paper bg-white print:shadow-none text-black text-[10pt] font-arial leading-snug w-[216px] h-[334px] border rounded-lg relative flex flex-col shadow-md overflow-hidden">
       <!-- Background Image (Top Half) -->
       <div v-if="data && data.bg_img" class="absolute -top-4 left-0 w-full h-[55%] z-0">
@@ -73,10 +92,15 @@
         {{ data.reverso_texto_inferior || 'Este carnet es personal e intransferible. Su uso indebido será sancionado. En caso de extravío favor devolverlo a la oficina de recursos humanos.' }}
       </div>
     </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
+
+const zoom = ref(1);
+
 const props = defineProps({
   data: {
     type: Object,
@@ -91,6 +115,10 @@ const props = defineProps({
   font-family: 'Arial Black', Arial, Helvetica, sans-serif !important;
 }
 @media print {
+  .origin-top {
+    transform: none !important;
+    margin-bottom: 0 !important;
+  }
   .carnet-paper {
     box-shadow: none !important;
     border: 1px solid #ccc !important;
