@@ -22,32 +22,42 @@
       </button>
     </div>
 
-    <div v-if="activeTab === 'info'" class="p-4 bg-gray-50 rounded-lg border border-gray-200">
-      <h3 class="text-sm font-bold text-blue-800 border-b pb-1 mb-3 uppercase">Datos del Carnet</h3>
-      <div class="space-y-3">
-        <div class="flex flex-col">
-          <label class="text-[10px] font-bold text-gray-500">CÉDULA</label>
-          <input v-model="form.cedula" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" />
+    <div v-if="activeTab === 'info'" class="space-y-6">
+      <!-- Datos Frontal -->
+      <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <h3 class="text-sm font-bold text-blue-800 border-b pb-1 mb-3 uppercase">Datos Frontal</h3>
+        <div class="space-y-3">
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold text-gray-500">CÉDULA</label>
+            <input v-model="form.cedula" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" />
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold text-gray-500">NOMBRE COMPLETO</label>
+            <input v-model="form.solicitante" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" />
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold text-gray-500">CARGO</label>
+            <input v-model="form.cargo" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" />
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold text-gray-500">FECHA DE VENCIMIENTO</label>
+            <input v-model="form.fecha_vencimiento" type="date" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" />
+          </div>
         </div>
-        <div class="flex flex-col">
-          <label class="text-[10px] font-bold text-gray-500">NOMBRE COMPLETO</label>
-          <input v-model="form.solicitante" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" />
-        </div>
-        <div class="flex flex-col">
-          <label class="text-[10px] font-bold text-gray-500">CARGO</label>
-          <input v-model="form.cargo" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" />
-        </div>
-        <div class="flex flex-col">
-          <label class="text-[10px] font-bold text-gray-500">FECHA DE VENCIMIENTO</label>
-          <input v-model="form.fecha_vencimiento" type="date" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" />
-        </div>
-        <div class="flex flex-col">
-          <label class="text-[10px] font-bold text-gray-500">TEXTO SUPERIOR REVERSO</label>
-          <textarea v-model="form.reverso_texto_superior" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none" rows="2"></textarea>
-        </div>
-        <div class="flex flex-col">
-          <label class="text-[10px] font-bold text-gray-500">TEXTO INFERIOR REVERSO</label>
-          <textarea v-model="form.reverso_texto_inferior" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none" rows="2"></textarea>
+      </div>
+
+      <!-- Datos Reverso -->
+      <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <h3 class="text-sm font-bold text-blue-800 border-b pb-1 mb-3 uppercase">Datos Reverso</h3>
+        <div class="space-y-3">
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold text-gray-500">TEXTO SUPERIOR REVERSO</label>
+            <textarea v-model="form.reverso_texto_superior" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none" rows="2"></textarea>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold text-gray-500">TEXTO INFERIOR REVERSO</label>
+            <textarea v-model="form.reverso_texto_inferior" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none" rows="2"></textarea>
+          </div>
         </div>
       </div>
     </div>
