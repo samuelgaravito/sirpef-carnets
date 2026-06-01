@@ -20,6 +20,14 @@
       >
         Reverso
       </button>
+      <div class="flex-1 flex justify-end items-center px-2">
+        <button 
+          @click="window.print()" 
+          class="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold py-1 px-3 rounded shadow flex items-center gap-1 uppercase"
+        >
+          <span class="text-sm">⎙</span> Imprimir
+        </button>
+      </div>
     </div>
 
     <div v-if="activeTab === 'info'" class="space-y-6">
@@ -112,6 +120,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+
+const window = globalThis.window;
 
 const props = defineProps({
   form: Object

@@ -16,7 +16,7 @@
     </div>
 
     <div 
-      class="flex flex-row flex-wrap justify-center gap-8 print:gap-4 transition-transform duration-200 origin-top"
+      class="flex flex-row flex-wrap justify-center gap-8 print:gap-4 transition-transform duration-200 origin-top print-area"
       :style="{ transform: `scale(${zoom})`, marginBottom: zoom > 1 ? `${(zoom - 1) * 334}px` : '0' }"
     >
       <!-- ANVERSO -->
@@ -115,6 +115,21 @@ const props = defineProps({
   font-family: 'Arial Black', Arial, Helvetica, sans-serif !important;
 }
 @media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-area, .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 1rem !important;
+  }
   .origin-top {
     transform: none !important;
     margin-bottom: 0 !important;
