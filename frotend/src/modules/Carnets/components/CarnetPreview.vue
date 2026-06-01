@@ -64,7 +64,7 @@
         </div>
         
         <div v-if="data.reverso_firma_img" class="flex flex-col items-center w-full">
-          <img :src="data.reverso_firma_img" class="w-44 h-auto" />
+          <img :src="data.reverso_firma_img" class="w-36 h-auto" />
         </div>
       </div>
       
