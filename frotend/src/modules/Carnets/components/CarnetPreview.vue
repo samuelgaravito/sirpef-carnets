@@ -63,7 +63,7 @@
         </div>
         
         <div class="absolute bottom-1 right-2 text-[6px] text-gray-400 font-bold">
-          Vence: {{ data.fecha_vencimiento || '00/00/0000' }}
+          Emisión: {{ data.fecha_emision || '00/00/0000' }}
         </div>
       </div>
     </div>

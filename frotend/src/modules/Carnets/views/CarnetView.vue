@@ -34,7 +34,7 @@ const carnetData = ref({
   cedula: '',
   solicitante: '',
   cargo: '',
-  fecha_vencimiento: '',
+  fecha_emision: '',
   foto_img: null,
   bg_img: null,
   footer_img: null,
