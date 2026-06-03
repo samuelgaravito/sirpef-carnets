@@ -77,11 +77,11 @@
         <div class="space-y-3">
           <div class="flex flex-col">
             <label class="text-[10px] font-bold text-gray-500">TEXTO SUPERIOR REVERSO</label>
-            <textarea v-model="form.reverso_texto_superior" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none" rows="2"></textarea>
+            <textarea v-model="form.reverso_texto_superior" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none" rows="3"></textarea>
           </div>
           <div class="flex flex-col">
             <label class="text-[10px] font-bold text-gray-500">TEXTO INFERIOR REVERSO</label>
-            <textarea v-model="form.reverso_texto_inferior" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none" rows="2"></textarea>
+            <textarea v-model="form.reverso_texto_inferior" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none" rows="3"></textarea>
           </div>
         </div>
       </div>
