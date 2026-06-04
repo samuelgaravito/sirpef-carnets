@@ -105,7 +105,7 @@
       <!-- Save Button -->
       <div class="flex justify-end pt-4">
         <button 
-          @click="$emit('save-config')"
+          @click="saveConfig"
           class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase rounded shadow-md transition-colors"
         >
           Guardar Configuración
@@ -120,13 +120,37 @@ import { ref } from 'vue';
 
 const window = globalThis.window;
 
+import { ref } from 'vue';
+import axios from 'axios';
+
 const props = defineProps({
   form: Object
 });
 
-const emit = defineEmits(['save-config']);
+const emit = defineEmits(['save-config', 'saved']);
 
 const activeTab = ref('info');
+
+const saveConfig = async () => {
+  try {
+    const payload = {
+      texto_superior: props.form.reverso_texto_superior,
+      texto_inferior: props.form.reverso_texto_inferior,
+      sello: props.form.reverso_sello_img,
+      firma: props.form.reverso_firma_img,
+      imagen_fondo: props.form.bg_img,
+      imagen_pie_pagina: props.form.footer_img,
+      estatus: true
+    };
+
+    const response = await axios.post('/api/registro/carnets', payload);
+    alert('Configuración guardada exitosamente');
+    emit('saved', response.data);
+  } catch (error) {
+    console.error(error);
+    alert('Error al guardar la configuración: ' + (error.response?.data?.error || error.message));
+  }
+};
 
 const handleImage = (event, type) => {
   const file = event.target.files[0];
