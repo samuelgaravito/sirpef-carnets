@@ -101,6 +101,16 @@
           </div>
         </div>
       </div>
+
+      <!-- Save Button -->
+      <div class="flex justify-end pt-4">
+        <button 
+          @click="$emit('save-config')"
+          class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase rounded shadow-md transition-colors"
+        >
+          Guardar Configuración
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -113,6 +123,8 @@ const window = globalThis.window;
 const props = defineProps({
   form: Object
 });
+
+const emit = defineEmits(['save-config']);
 
 const activeTab = ref('info');
 
