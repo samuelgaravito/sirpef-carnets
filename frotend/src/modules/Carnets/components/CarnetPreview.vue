@@ -142,7 +142,24 @@ const fetchLastActiveConfig = async () => {
 
 onMounted(fetchLastActiveConfig);
 
-const downloadPDF = () => {
+const toDataURL = (url: string): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx?.drawImage(img, 0, 0);
+      resolve(canvas.toDataURL('image/png'));
+    };
+    img.onerror = reject;
+    img.src = url;
+  });
+};
+
+const downloadPDF = async () => {
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
@@ -154,12 +171,17 @@ const downloadPDF = () => {
 
   // --- ANVERSO ---
   if (props.data.bg_img) {
-    doc.addImage(props.data.bg_img, 'PNG', 0, -4, width, height * 0.55);
+    try {
+      const bgData = props.data.bg_img.startsWith('data:') ? props.data.bg_img : await toDataURL(props.data.bg_img);
+      doc.addImage(bgData, 'PNG', 0, -4, width, height * 0.55);
+    } catch (e) { console.error("Error loading bg_img", e); }
   }
 
   if (props.data.foto_img) {
-    // Foto centered: (54 - 22)/2 = 16mm left
-    doc.addImage(props.data.foto_img, 'PNG', 16, 24, 22, 24);
+    try {
+      const fotoData = props.data.foto_img.startsWith('data:') ? props.data.foto_img : await toDataURL(props.data.foto_img);
+      doc.addImage(fotoData, 'PNG', 16, 24, 22, 24);
+    } catch (e) { console.error("Error loading foto_img", e); }
   }
 
   doc.setTextColor(30, 58, 138);
@@ -179,7 +201,10 @@ const downloadPDF = () => {
   doc.text(props.data.oficina || 'Oficina / Unidad', width / 2, 68, { align: 'center', maxWidth: 45 });
 
   if (props.data.footer_img) {
-    doc.addImage(props.data.footer_img, 'PNG', 5, 72, width - 10, 10);
+    try {
+      const footerData = props.data.footer_img.startsWith('data:') ? props.data.footer_img : await toDataURL(props.data.footer_img);
+      doc.addImage(footerData, 'PNG', 5, 72, width - 10, 10);
+    } catch (e) { console.error("Error loading footer_img", e); }
   }
 
   doc.setTextColor(156, 163, 175);
@@ -197,10 +222,16 @@ const downloadPDF = () => {
   doc.text(splitTop, 5, 8);
 
   if (props.data.reverso_sello_img) {
-    doc.addImage(props.data.reverso_sello_img, 'PNG', (width - 15) / 2, 30, 15, 15);
+    try {
+      const selloData = props.data.reverso_sello_img.startsWith('data:') ? props.data.reverso_sello_img : await toDataURL(props.data.reverso_sello_img);
+      doc.addImage(selloData, 'PNG', (width - 15) / 2, 30, 15, 15);
+    } catch (e) { console.error("Error loading sello_img", e); }
   }
   if (props.data.reverso_firma_img) {
-    doc.addImage(props.data.reverso_firma_img, 'PNG', (width - 25) / 2, 48, 25, 10);
+    try {
+      const firmaData = props.data.reverso_firma_img.startsWith('data:') ? props.data.reverso_firma_img : await toDataURL(props.data.reverso_firma_img);
+      doc.addImage(firmaData, 'PNG', (width - 25) / 2, 48, 25, 10);
+    } catch (e) { console.error("Error loading firma_img", e); }
   }
 
   const splitBottom = doc.splitTextToSize(props.data.reverso_texto_inferior || 'Este carnet es personal e intransferible.', width - 10);
