@@ -165,15 +165,19 @@ onMounted(fetchLastActiveConfig);
   }
   .carnet-paper {
     box-shadow: none !important;
-    border: 1px solid #ccc !important;
-    margin: 0 auto !important;
+    border: none !important;
+    margin: 0 !important;
     page-break-after: always;
     break-after: page;
   }
-  /* Remove page break from the last element to avoid empty page */
-  .carnet-paper:last-child {
-    page-break-after: auto;
-    break-after: auto;
+  /* Ensure only the first two elements print if more exist */
+  .carnet-paper:nth-child(n+3) {
+    display: none !important;
+  }
+  /* Remove page break from the second element (reverso) to avoid empty 3rd page */
+  .carnet-paper:nth-child(2) {
+    page-break-after: avoid;
+    break-after: avoid;
   }
 }
 </style>
