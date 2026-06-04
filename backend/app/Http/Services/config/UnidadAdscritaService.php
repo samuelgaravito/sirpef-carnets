@@ -12,7 +12,7 @@ use Illuminate\Http\{
 
 
 
-class MinisterioService {
+class UnidadAdscritaService {
 
     static public function indexMinisterios()
     {
