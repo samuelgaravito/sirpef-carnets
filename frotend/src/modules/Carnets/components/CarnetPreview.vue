@@ -141,18 +141,26 @@ onMounted(fetchLastActiveConfig);
     size: 5.4cm 8.57cm;
     margin: 0;
   }
-  body * {
+  body > *:not(.print-area) {
+    display: none !important;
+  }
+  body {
     visibility: hidden;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   .print-area, .print-area * {
     visibility: visible;
   }
   .print-area {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
-    width: 100%;
-    display: block !important;
+    width: 100vw;
+    height: 100vh;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
     background: white !important;
     z-index: 9999;
     margin: 0 !important;
@@ -175,10 +183,15 @@ onMounted(fetchLastActiveConfig);
   .carnet-paper:nth-child(n+3) {
     display: none !important;
   }
-  /* Remove page break from the second element (reverso) to avoid empty 3rd page */
+  /* Remove page break from the second element (reverso) to avoid empty pages */
   .carnet-paper:nth-child(2) {
     page-break-after: avoid !important;
     break-after: avoid !important;
+  }
+  /* Reset scaling for print */
+  .print-area {
+    transform: none !important;
+    margin-bottom: 0 !important;
   }
 }
 </style>
