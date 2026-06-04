@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-namespace App\Http\Controllers;
-
-use App\Http\Services\CarnetService;
+use App\Http\Services\Carnet\CarnetService;
 use Illuminate\Http\Request;
 use Exception;
 
