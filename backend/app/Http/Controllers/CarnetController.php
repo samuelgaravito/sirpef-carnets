@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+namespace App\Http\Controllers;
+
 use App\Http\Services\CarnetService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Exception;
 
 class CarnetController extends Controller
 {
@@ -23,22 +25,12 @@ class CarnetController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'texto_superior' => 'required|string',
-            'texto_inferior' => 'required|string',
-            'sello' => 'required|string',
-            'firma' => 'nullable|string',
-            'imagen_fondo' => 'required|string',
-            'imagen_pie_pagina' => 'required|string',
-            'estatus' => 'boolean',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+        try {
+            $infoCarnet = $this->carnetService->create($request->all());
+            return response()->json($infoCarnet, 201);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
         }
-
-        $infoCarnet = $this->carnetService->create($request->all());
-        return response()->json($infoCarnet, 201);
     }
 
     public function show($id)
