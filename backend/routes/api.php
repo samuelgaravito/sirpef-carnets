@@ -10,6 +10,7 @@ use App\Http\Controllers\AvatarController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RegistroController;
+use App\Http\Controllers\CarnetController;
 use App\Http\Controllers\MigracionController;
 use App\Http\Controllers\EstadisticaController;
 use App\Http\Controllers\ConfiguracionController;
@@ -214,6 +215,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('obtener-foto-persona/{id}', [ConstController::class, 'obtenerFoto']);
         
         Route::get('/unidades-adscritas', [EstadisticaController::class, 'unidadesAdscritasDelUsuario']);
+
+        Route::prefix('carnets')->group(function () {
+            Route::get('/', [CarnetController::class, 'index']);
+            Route::post('/', [CarnetController::class, 'store']);
+            Route::get('/{id}', [CarnetController::class, 'show']);
+            Route::put('/{id}', [CarnetController::class, 'update']);
+            Route::delete('/{id}', [CarnetController::class, 'destroy']);
+        });
 
     });
     
