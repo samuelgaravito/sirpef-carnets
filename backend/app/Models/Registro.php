@@ -13,10 +13,18 @@ class Registro extends Model
         'descripcion',
         'hora_voto',
         'evento_persona_id',
+        'info_carnet_id',
+        'foto_carnet',
+        'status',
     ];
 
     public function eventoPersona()
     {
         return $this->belongsTo(EventoPersona::class, 'evento_persona_id');
+    }
+
+    public function infoCarnet()
+    {
+        return $this->belongsTo(InfoCarnet::class, 'info_carnet_id');
     }
 }
