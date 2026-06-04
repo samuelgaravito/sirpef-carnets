@@ -167,8 +167,9 @@ onMounted(fetchLastActiveConfig);
     box-shadow: none !important;
     border: none !important;
     margin: 0 !important;
-    page-break-after: always;
-    break-after: page;
+    page-break-after: always !important;
+    break-after: page !important;
+    display: flex !important;
   }
   /* Ensure only the first two elements print if more exist */
   .carnet-paper:nth-child(n+3) {
@@ -176,8 +177,8 @@ onMounted(fetchLastActiveConfig);
   }
   /* Remove page break from the second element (reverso) to avoid empty 3rd page */
   .carnet-paper:nth-child(2) {
-    page-break-after: avoid;
-    break-after: avoid;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
   }
 }
 </style>
