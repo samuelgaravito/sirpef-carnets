@@ -111,7 +111,16 @@
       </div>
 
       <!-- Save Button -->
-      <div class="flex justify-end pt-4">
+      <div class="flex justify-end gap-2 pt-4">
+        <button 
+          @click="downloadPDF"
+          class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white text-xs font-bold uppercase rounded shadow-md transition-colors flex items-center gap-2"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+          </svg>
+          Imprimir Carnet
+        </button>
         <button 
           @click="saveConfig"
           class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase rounded shadow-md transition-colors"
@@ -127,6 +136,7 @@
 import { ref, onMounted } from 'vue';
 import Http from '@/utils/Http';
 import { alerta } from '@/utils/alert';
+import { jsPDF } from 'jspdf';
 
 const props = defineProps({
   form: Object
@@ -205,5 +215,71 @@ const handleImage = (event, type) => {
     };
     reader.readAsDataURL(file);
   }
+};
+
+const downloadPDF = () => {
+  const doc = new jsPDF({
+    orientation: 'portrait',
+    unit: 'mm',
+    format: [54, 85.7]
+  });
+
+  const width = 54;
+  const height = 85.7;
+
+  // --- ANVERSO ---
+  if (props.form.bg_img) {
+    doc.addImage(props.form.bg_img, 'PNG', 0, -4, width, height * 0.55);
+  }
+
+  if (props.form.foto_img) {
+    doc.addImage(props.form.foto_img, 'PNG', 16, 24, 22, 24);
+  }
+
+  doc.setTextColor(30, 58, 138);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(14);
+  doc.text((props.form.solicitante || 'NOMBRE APELLIDO').toUpperCase(), width / 2, 54, { align: 'center', maxWidth: 45 });
+
+  doc.setTextColor(107, 114, 128);
+  doc.setFontSize(8);
+  doc.text(`C.I. ${props.form.cedula || 'V-00.000.000'}`, width / 2, 59, { align: 'center' });
+
+  doc.setTextColor(75, 85, 99);
+  doc.setFontSize(9);
+  doc.text(props.form.cargo || 'Cargo que ostenta', width / 2, 64, { align: 'center', maxWidth: 45 });
+  
+  doc.setFontSize(8);
+  doc.text(props.form.oficina || 'Oficina / Unidad', width / 2, 68, { align: 'center', maxWidth: 45 });
+
+  if (props.form.footer_img) {
+    doc.addImage(props.form.footer_img, 'PNG', 5, 72, width - 10, 10);
+  }
+
+  doc.setTextColor(156, 163, 175);
+  doc.setFontSize(5);
+  doc.text(`Emisión: ${props.form.fecha_emision || '00/00/0000'}`, width - 5, 83, { align: 'right' });
+
+  // --- REVERSO ---
+  doc.addPage();
+  
+  doc.setTextColor(55, 65, 81);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(6);
+  
+  const splitTop = doc.splitTextToSize(props.form.reverso_texto_superior || 'Información institucional superior.', width - 10);
+  doc.text(splitTop, 5, 8);
+
+  if (props.form.reverso_sello_img) {
+    doc.addImage(props.form.reverso_sello_img, 'PNG', (width - 15) / 2, 30, 15, 15);
+  }
+  if (props.form.reverso_firma_img) {
+    doc.addImage(props.form.reverso_firma_img, 'PNG', (width - 25) / 2, 48, 25, 10);
+  }
+
+  const splitBottom = doc.splitTextToSize(props.form.reverso_texto_inferior || 'Este carnet es personal e intransferible.', width - 10);
+  doc.text(splitBottom, 5, 75);
+
+  doc.save(`carnet_${props.form.cedula || 'nuevo'}.pdf`);
 };
 </script>
