@@ -117,10 +117,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-
-const window = globalThis.window;
-
-import { ref } from 'vue';
 import axios from 'axios';
 
 const props = defineProps({
@@ -143,7 +139,7 @@ const saveConfig = async () => {
       estatus: true
     };
 
-    const response = await axios.post('/api/registro/carnets', payload);
+    const response = await axios.post('/api/registro/carnets/', payload);
     alert('Configuración guardada exitosamente');
     emit('saved', response.data);
   } catch (error) {

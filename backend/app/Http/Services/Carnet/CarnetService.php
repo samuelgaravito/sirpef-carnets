@@ -2,10 +2,6 @@
 
 namespace App\Http\Services\Carnet;
 
-<?php
-
-namespace App\Http\Services\Carnet;
-
 use App\Models\InfoCarnet;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
