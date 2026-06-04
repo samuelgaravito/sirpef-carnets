@@ -13,6 +13,16 @@
       />
       <span class="text-xs font-mono w-10 text-center">{{ Math.round(zoom * 100) }}%</span>
       <button @click="zoom = 1" class="text-[10px] bg-white px-2 py-1 border rounded shadow-sm hover:bg-gray-50">Reset</button>
+      
+      <button 
+        @click="downloadPDF" 
+        class="ml-auto flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-[10px] font-bold uppercase transition-colors"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        Descargar PDF
+      </button>
     </div>
 
     <div 
@@ -99,6 +109,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import Http from '@/utils/Http';
+import { jsPDF } from 'jspdf';
 
 const zoom = ref(1);
 
@@ -130,6 +141,73 @@ const fetchLastActiveConfig = async () => {
 };
 
 onMounted(fetchLastActiveConfig);
+
+const downloadPDF = () => {
+  const doc = new jsPDF({
+    orientation: 'portrait',
+    unit: 'mm',
+    format: [54, 85.7]
+  });
+
+  const width = 54;
+  const height = 85.7;
+
+  // --- ANVERSO ---
+  if (props.data.bg_img) {
+    doc.addImage(props.data.bg_img, 'PNG', 0, -4, width, height * 0.55);
+  }
+
+  if (props.data.foto_img) {
+    // Foto centered: (54 - 22)/2 = 16mm left
+    doc.addImage(props.data.foto_img, 'PNG', 16, 24, 22, 24);
+  }
+
+  doc.setTextColor(30, 58, 138);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(14);
+  doc.text((props.data.solicitante || 'NOMBRE APELLIDO').toUpperCase(), width / 2, 54, { align: 'center', maxWidth: 45 });
+
+  doc.setTextColor(107, 114, 128);
+  doc.setFontSize(8);
+  doc.text(`C.I. ${props.data.cedula || 'V-00.000.000'}`, width / 2, 59, { align: 'center' });
+
+  doc.setTextColor(75, 85, 99);
+  doc.setFontSize(9);
+  doc.text(props.data.cargo || 'Cargo que ostenta', width / 2, 64, { align: 'center', maxWidth: 45 });
+  
+  doc.setFontSize(8);
+  doc.text(props.data.oficina || 'Oficina / Unidad', width / 2, 68, { align: 'center', maxWidth: 45 });
+
+  if (props.data.footer_img) {
+    doc.addImage(props.data.footer_img, 'PNG', 5, 72, width - 10, 10);
+  }
+
+  doc.setTextColor(156, 163, 175);
+  doc.setFontSize(5);
+  doc.text(`Emisión: ${props.data.fecha_emision || '00/00/0000'}`, width - 5, 83, { align: 'right' });
+
+  // --- REVERSO ---
+  doc.addPage();
+  
+  doc.setTextColor(55, 65, 81);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(6);
+  
+  const splitTop = doc.splitTextToSize(props.data.reverso_texto_superior || 'Información institucional superior.', width - 10);
+  doc.text(splitTop, 5, 8);
+
+  if (props.data.reverso_sello_img) {
+    doc.addImage(props.data.reverso_sello_img, 'PNG', (width - 15) / 2, 30, 15, 15);
+  }
+  if (props.data.reverso_firma_img) {
+    doc.addImage(props.data.reverso_firma_img, 'PNG', (width - 25) / 2, 48, 25, 10);
+  }
+
+  const splitBottom = doc.splitTextToSize(props.data.reverso_texto_inferior || 'Este carnet es personal e intransferible.', width - 10);
+  doc.text(splitBottom, 5, 75);
+
+  doc.save(`carnet_${props.data.cedula || 'nuevo'}.pdf`);
+};
 </script>
 
 <style scoped>
