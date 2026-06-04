@@ -97,7 +97,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import Http from '@/utils/Http';
 
 const zoom = ref(1);
 
@@ -108,6 +109,27 @@ const props = defineProps({
     default: () => ({})
   }
 });
+
+const fetchLastActiveConfig = async () => {
+  try {
+    const response = await Http.get('/api/registro/carnets');
+    const configs = response.data;
+    const lastActive = configs.filter((c: any) => c.estatus).pop();
+    
+    if (lastActive) {
+      if (!props.data.reverso_texto_superior) props.data.reverso_texto_superior = lastActive.texto_superior;
+      if (!props.data.reverso_texto_inferior) props.data.reverso_texto_inferior = lastActive.texto_inferior;
+      if (!props.data.reverso_sello_img) props.data.reverso_sello_img = lastActive.sello;
+      if (!props.data.reverso_firma_img) props.data.reverso_firma_img = lastActive.firma;
+      if (!props.data.bg_img) props.data.bg_img = lastActive.imagen_fondo;
+      if (!props.data.footer_img) props.data.footer_img = lastActive.imagen_pie_pagina;
+    }
+  } catch (error) {
+    console.error("Error al cargar previsualización activa:", error);
+  }
+};
+
+onMounted(fetchLastActiveConfig);
 </script>
 
 <style scoped>

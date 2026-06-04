@@ -116,8 +116,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import Http from '@/utils/Http';
+import { alerta } from '@/utils/alert';
 
 const props = defineProps({
   form: Object
@@ -126,6 +127,27 @@ const props = defineProps({
 const emit = defineEmits(['save-config', 'saved']);
 
 const activeTab = ref('info');
+
+const fetchLastConfig = async () => {
+  try {
+    const response = await Http.get('/api/registro/carnets');
+    const configs = response.data;
+    const lastActive = configs.filter((c: any) => c.estatus).pop();
+    
+    if (lastActive) {
+      props.form.reverso_texto_superior = lastActive.texto_superior;
+      props.form.reverso_texto_inferior = lastActive.texto_inferior;
+      props.form.reverso_sello_img = lastActive.sello;
+      props.form.reverso_firma_img = lastActive.firma;
+      props.form.bg_img = lastActive.imagen_fondo;
+      props.form.footer_img = lastActive.imagen_pie_pagina;
+    }
+  } catch (error) {
+    console.error("Error al cargar configuración inicial:", error);
+  }
+};
+
+onMounted(fetchLastConfig);
 
 const saveConfig = async () => {
   try {
@@ -140,11 +162,11 @@ const saveConfig = async () => {
     };
 
     const response = await Http.post('/api/registro/carnets', payload);
-    alert('Configuración guardada exitosamente');
+    alerta('Éxito', 'Configuración guardada exitosamente', 'success');
     emit('saved', response.data);
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    alert('Error al guardar la configuración: ' + (error.response?.data?.error || error.message));
+    alerta('Error', 'Error al guardar la configuración: ' + (error.response?.data?.error || error.message), 'error');
   }
 };
 
