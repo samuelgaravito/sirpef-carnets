@@ -43,7 +43,15 @@ class CarnetService
 
     private function saveImage($base64Image, $path)
     {
+        if (empty($base64Image)) {
+            return null;
+        }
+
         if (filter_var($base64Image, FILTER_VALIDATE_URL)) {
+            return $base64Image;
+        }
+
+        if (!str_contains($base64Image, ',')) {
             return $base64Image;
         }
 

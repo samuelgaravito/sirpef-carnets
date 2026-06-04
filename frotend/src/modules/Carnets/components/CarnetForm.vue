@@ -139,7 +139,7 @@ const saveConfig = async () => {
       estatus: true
     };
 
-    const response = await axios.post('/api/registro/carnets/', payload);
+    const response = await axios.post('/api/registro/carnets', payload);
     alert('Configuración guardada exitosamente');
     emit('saved', response.data);
   } catch (error) {
