@@ -39,7 +39,15 @@
           </div>
           <div class="flex flex-col">
             <label class="text-[10px] font-bold text-gray-500">OFICINA</label>
-            <input v-model="form.oficina" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" />
+            <input 
+              v-model="form.oficina" 
+              list="ministerios-list"
+              placeholder="Buscar o escribir oficina..."
+              class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" 
+            />
+            <datalist id="ministerios-list">
+              <option v-for="m in ministerios" :key="m.id" :value="m.nombre"></option>
+            </datalist>
           </div>
           <div class="flex flex-col">
             <label class="text-[10px] font-bold text-gray-500">FECHA DE EMISIÓN</label>
@@ -127,6 +135,16 @@ const props = defineProps({
 const emit = defineEmits(['save-config', 'saved']);
 
 const activeTab = ref('info');
+const ministerios = ref<any[]>([]);
+
+const fetchMinisterios = async () => {
+  try {
+    const response = await Http.get('/api/ministerios');
+    ministerios.value = response.data;
+  } catch (error) {
+    console.error("Error al cargar ministerios:", error);
+  }
+};
 
 const fetchLastConfig = async () => {
   try {
@@ -147,7 +165,10 @@ const fetchLastConfig = async () => {
   }
 };
 
-onMounted(fetchLastConfig);
+onMounted(() => {
+  fetchLastConfig();
+  fetchMinisterios();
+});
 
 const saveConfig = async () => {
   try {
