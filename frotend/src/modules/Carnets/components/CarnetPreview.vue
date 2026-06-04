@@ -16,11 +16,11 @@
     </div>
 
     <div 
-      class="flex flex-row flex-wrap justify-center gap-8 print:gap-4 transition-transform duration-200 origin-top print-area"
-      :style="{ transform: `scale(${zoom})`, marginBottom: zoom > 1 ? `${(zoom - 1) * 334}px` : '0' }"
+      class="flex flex-row flex-wrap justify-center gap-8 print:gap-0 transition-transform duration-200 origin-top print-area"
+      :style="{ transform: `scale(${zoom})`, marginBottom: zoom > 1 ? `${(zoom - 1) * 8.57}cm` : '0' }"
     >
       <!-- ANVERSO -->
-    <div class="carnet-paper bg-white print:shadow-none text-black text-[10pt] font-arial leading-snug w-[216px] h-[334px] border rounded-lg relative flex flex-col shadow-md overflow-hidden">
+    <div class="carnet-paper bg-white print:shadow-none text-black text-[10pt] font-arial leading-snug w-[5.4cm] h-[8.57cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden">
       <!-- Background Image (Top Half) -->
       <div v-if="data && data.bg_img" class="absolute -top-4 left-0 w-full h-[55%] z-0">
         <img :src="data.bg_img" class="w-full h-full object-cover" />
@@ -69,7 +69,7 @@
     </div>
 
     <!-- REVERSO -->
-    <div class="carnet-paper bg-white print:shadow-none text-black text-[10pt] font-arial leading-snug w-[216px] h-[334px] border rounded-lg relative flex flex-col shadow-md overflow-hidden p-4">
+    <div class="carnet-paper bg-white print:shadow-none text-black text-[10pt] font-arial leading-snug w-[5.4cm] h-[8.57cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden p-4">
       
       <!-- Top Paragraph -->
       <div class="relative z-10 text-[7px] text-justify leading-tight text-gray-700 mb-auto whitespace-pre-wrap">
@@ -137,6 +137,10 @@ onMounted(fetchLastActiveConfig);
   font-family: 'Arial Black', Arial, Helvetica, sans-serif !important;
 }
 @media print {
+  @page {
+    size: 5.4cm 8.57cm;
+    margin: 0;
+  }
   body * {
     visibility: hidden;
   }
