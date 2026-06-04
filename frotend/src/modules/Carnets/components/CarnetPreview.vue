@@ -16,7 +16,7 @@
     </div>
 
     <div 
-      class="flex flex-row flex-wrap justify-center gap-8 print:gap-0 transition-transform duration-200 origin-top print-area"
+      class="flex flex-row flex-wrap justify-center gap-8 print:gap-0 transition-transform duration-200 origin-top print-area print:block"
       :style="{ transform: `scale(${zoom})`, marginBottom: zoom > 1 ? `${(zoom - 1) * 8.57}cm` : '0' }"
     >
       <!-- ANVERSO -->
@@ -153,14 +153,11 @@ onMounted(fetchLastActiveConfig);
     visibility: visible;
   }
   .print-area {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
+    width: 5.4cm;
+    display: block !important;
     background: white !important;
     z-index: 9999;
     margin: 0 !important;
@@ -183,10 +180,11 @@ onMounted(fetchLastActiveConfig);
   .carnet-paper:nth-child(n+3) {
     display: none !important;
   }
-  /* Remove page break from the second element (reverso) to avoid empty pages */
+  /* Ensure the second element (reverso) starts on a new page and is the last one printed */
   .carnet-paper:nth-child(2) {
     page-break-after: avoid !important;
     break-after: avoid !important;
+    display: flex !important;
   }
   /* Reset scaling for print */
   .print-area {
