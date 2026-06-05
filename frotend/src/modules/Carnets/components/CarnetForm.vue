@@ -137,6 +137,7 @@ import { ref, onMounted } from 'vue';
 import Http from '@/utils/Http';
 import { alerta } from '@/utils/alert';
 import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const props = defineProps({
   form: Object
@@ -234,82 +235,27 @@ const toDataURL = async (url: string): Promise<string> => {
 };
 
 const downloadPDF = async () => {
+  const elements = document.querySelectorAll('.carnet-paper');
+  if (elements.length === 0) return;
+
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
     format: [54, 85.7]
   });
 
-  const width = 54;
-  const height = 85.7;
+  for (let i = 0; i < elements.length; i++) {
+    const canvas = await html2canvas(elements[i] as HTMLElement, {
+      scale: 3,
+      useCORS: true,
+      logging: false,
+      backgroundColor: null
+    });
 
-  // --- ANVERSO ---
-  if (props.form.bg_img) {
-    try {
-      const bgData = props.form.bg_img.startsWith('data:') ? props.form.bg_img : await toDataURL(props.form.bg_img);
-      doc.addImage(bgData, 'PNG', 0, 0, width, height * 0.5);
-    } catch (e) { console.error("Error loading bg_img", e); }
+    const imgData = canvas.toDataURL('image/png');
+    if (i > 0) doc.addPage([54, 85.7], 'portrait');
+    doc.addImage(imgData, 'PNG', 0, 0, 54, 85.7);
   }
-
-  if (props.form.foto_img) {
-    try {
-      const fotoData = props.form.foto_img.startsWith('data:') ? props.form.foto_img : await toDataURL(props.form.foto_img);
-      doc.addImage(fotoData, 'PNG', 16, 22, 22, 24);
-    } catch (e) { console.error("Error loading foto_img", e); }
-  }
-
-  doc.setTextColor(30, 58, 138);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(12);
-  doc.text((props.form.solicitante || 'NOMBRE APELLIDO').toUpperCase(), width / 2, 50, { align: 'center', maxWidth: 40, lineHeightFactor: 1.1 });
-
-  doc.setTextColor(107, 114, 128);
-  doc.setFontSize(8);
-  doc.text(`C.I. ${props.form.cedula || 'V-00.000.000'}`, width / 2, 56, { align: 'center' });
-
-  doc.setTextColor(75, 85, 99);
-  doc.setFontSize(8);
-  doc.text(props.form.cargo || 'Cargo que ostenta', width / 2, 61, { align: 'center', maxWidth: 42, lineHeightFactor: 1 });
-  
-  doc.setFontSize(7);
-  doc.text(props.form.oficina || 'Oficina / Unidad', width / 2, 66, { align: 'center', maxWidth: 42, lineHeightFactor: 1 });
-
-  if (props.form.footer_img) {
-    try {
-      const footerData = props.form.footer_img.startsWith('data:') ? props.form.footer_img : await toDataURL(props.form.footer_img);
-      doc.addImage(footerData, 'PNG', 5, 72, width - 10, 10);
-    } catch (e) { console.error("Error loading footer_img", e); }
-  }
-
-  doc.setTextColor(156, 163, 175);
-  doc.setFontSize(5);
-  doc.text(`Emisión: ${props.form.fecha_emision || '00/00/0000'}`, width - 5, 83, { align: 'right' });
-
-  // --- REVERSO ---
-  doc.addPage();
-  
-  doc.setTextColor(55, 65, 81);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(6);
-  
-  const splitTop = doc.splitTextToSize(props.form.reverso_texto_superior || 'Información institucional superior.', width - 10);
-  doc.text(splitTop, 5, 8);
-
-  if (props.form.reverso_sello_img) {
-    try {
-      const selloData = props.form.reverso_sello_img.startsWith('data:') ? props.form.reverso_sello_img : await toDataURL(props.form.reverso_sello_img);
-      doc.addImage(selloData, 'PNG', (width - 15) / 2, 30, 15, 15);
-    } catch (e) { console.error("Error loading sello_img", e); }
-  }
-  if (props.form.reverso_firma_img) {
-    try {
-      const firmaData = props.form.reverso_firma_img.startsWith('data:') ? props.form.reverso_firma_img : await toDataURL(props.form.reverso_firma_img);
-      doc.addImage(firmaData, 'PNG', (width - 25) / 2, 48, 25, 10);
-    } catch (e) { console.error("Error loading firma_img", e); }
-  }
-
-  const splitBottom = doc.splitTextToSize(props.form.reverso_texto_inferior || 'Este carnet es personal e intransferible.', width - 10);
-  doc.text(splitBottom, 5, 75);
 
   window.open(doc.output('bloburl'), '_blank');
 };

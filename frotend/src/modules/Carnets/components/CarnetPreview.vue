@@ -32,7 +32,7 @@
       <!-- ANVERSO -->
     <div class="carnet-paper bg-white print:shadow-none text-black text-[10pt] font-arial leading-snug w-[5.4cm] h-[8.57cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden">
       <!-- Background Image (Top Half) -->
-      <div v-if="data && data.bg_img" class="absolute -top-4 left-0 w-full h-[55%] z-0">
+      <div v-if="data && data.bg_img" class="absolute top-0 left-0 w-full h-[50%] z-0">
         <img :src="data.bg_img" class="w-full h-full object-cover" />
       </div>
 
@@ -110,6 +110,7 @@
 import { ref, onMounted } from 'vue';
 import Http from '@/utils/Http';
 import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const zoom = ref(1);
 
@@ -159,82 +160,27 @@ const toDataURL = async (url: string): Promise<string> => {
 };
 
 const downloadPDF = async () => {
+  const elements = document.querySelectorAll('.carnet-paper');
+  if (elements.length === 0) return;
+
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
     format: [54, 85.7]
   });
 
-  const width = 54;
-  const height = 85.7;
+  for (let i = 0; i < elements.length; i++) {
+    const canvas = await html2canvas(elements[i] as HTMLElement, {
+      scale: 3,
+      useCORS: true,
+      logging: false,
+      backgroundColor: null
+    });
 
-  // --- ANVERSO ---
-  if (props.data.bg_img) {
-    try {
-      const bgData = props.data.bg_img.startsWith('data:') ? props.data.bg_img : await toDataURL(props.data.bg_img);
-      doc.addImage(bgData, 'PNG', 0, 0, width, height * 0.5);
-    } catch (e) { console.error("Error loading bg_img", e); }
+    const imgData = canvas.toDataURL('image/png');
+    if (i > 0) doc.addPage([54, 85.7], 'portrait');
+    doc.addImage(imgData, 'PNG', 0, 0, 54, 85.7);
   }
-
-  if (props.data.foto_img) {
-    try {
-      const fotoData = props.data.foto_img.startsWith('data:') ? props.data.foto_img : await toDataURL(props.data.foto_img);
-      doc.addImage(fotoData, 'PNG', 16, 22, 22, 24);
-    } catch (e) { console.error("Error loading foto_img", e); }
-  }
-
-  doc.setTextColor(30, 58, 138);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(12);
-  doc.text((props.data.solicitante || 'NOMBRE APELLIDO').toUpperCase(), width / 2, 50, { align: 'center', maxWidth: 40, lineHeightFactor: 1.1 });
-
-  doc.setTextColor(107, 114, 128);
-  doc.setFontSize(8);
-  doc.text(`C.I. ${props.data.cedula || 'V-00.000.000'}`, width / 2, 56, { align: 'center' });
-
-  doc.setTextColor(75, 85, 99);
-  doc.setFontSize(8);
-  doc.text(props.data.cargo || 'Cargo que ostenta', width / 2, 61, { align: 'center', maxWidth: 42, lineHeightFactor: 1 });
-  
-  doc.setFontSize(7);
-  doc.text(props.data.oficina || 'Oficina / Unidad', width / 2, 66, { align: 'center', maxWidth: 42, lineHeightFactor: 1 });
-
-  if (props.data.footer_img) {
-    try {
-      const footerData = props.data.footer_img.startsWith('data:') ? props.data.footer_img : await toDataURL(props.data.footer_img);
-      doc.addImage(footerData, 'PNG', 5, 72, width - 10, 10);
-    } catch (e) { console.error("Error loading footer_img", e); }
-  }
-
-  doc.setTextColor(156, 163, 175);
-  doc.setFontSize(5);
-  doc.text(`Emisión: ${props.data.fecha_emision || '00/00/0000'}`, width - 5, 83, { align: 'right' });
-
-  // --- REVERSO ---
-  doc.addPage();
-  
-  doc.setTextColor(55, 65, 81);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(6);
-  
-  const splitTop = doc.splitTextToSize(props.data.reverso_texto_superior || 'Información institucional superior.', width - 10);
-  doc.text(splitTop, 5, 8);
-
-  if (props.data.reverso_sello_img) {
-    try {
-      const selloData = props.data.reverso_sello_img.startsWith('data:') ? props.data.reverso_sello_img : await toDataURL(props.data.reverso_sello_img);
-      doc.addImage(selloData, 'PNG', (width - 15) / 2, 30, 15, 15);
-    } catch (e) { console.error("Error loading sello_img", e); }
-  }
-  if (props.data.reverso_firma_img) {
-    try {
-      const firmaData = props.data.reverso_firma_img.startsWith('data:') ? props.data.reverso_firma_img : await toDataURL(props.data.reverso_firma_img);
-      doc.addImage(firmaData, 'PNG', (width - 25) / 2, 48, 25, 10);
-    } catch (e) { console.error("Error loading firma_img", e); }
-  }
-
-  const splitBottom = doc.splitTextToSize(props.data.reverso_texto_inferior || 'Este carnet es personal e intransferible.', width - 10);
-  doc.text(splitBottom, 5, 75);
 
   window.open(doc.output('bloburl'), '_blank');
 };
