@@ -45,6 +45,8 @@ const carnetData = ref({
 });
 
 const printCarnet = () => {
+  const printContent = document.getElementById('carnet-printable');
+  if (!printContent) return;
   window.print();
 };
 
