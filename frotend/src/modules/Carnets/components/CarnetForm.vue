@@ -247,7 +247,7 @@ const downloadPDF = async () => {
   if (props.form.bg_img) {
     try {
       const bgData = props.form.bg_img.startsWith('data:') ? props.form.bg_img : await toDataURL(props.form.bg_img);
-      doc.addImage(bgData, 'PNG', 0, 0, width, height * 0.55);
+      doc.addImage(bgData, 'PNG', 0, 0, width, height * 0.5);
     } catch (e) { console.error("Error loading bg_img", e); }
   }
 
