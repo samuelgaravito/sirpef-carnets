@@ -16,7 +16,7 @@
         <CarnetForm :form="carnetData" />
       </div>
       <div class="w-2/3 overflow-y-auto bg-gray-200 p-8 flex justify-center">
-        <div id="carnet-printable">
+        <div id="carnet-printable" class="print-area">
           <CarnetPreview :data="carnetData" />
         </div>
       </div>
