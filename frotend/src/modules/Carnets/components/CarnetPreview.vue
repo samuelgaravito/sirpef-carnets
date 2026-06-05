@@ -39,8 +39,8 @@
       <!-- Content Container -->
       <div class="relative z-10 flex flex-col items-center h-full">
         <!-- Photo centered -->
-        <div class="mt-24 mb-6">
-          <div v-if="data && data.foto_img" class="w-[82px] h-[90px] rounded-2xl shadow-xl overflow-hidden bg-white">
+        <div class="mt-[85px] mb-4">
+          <div v-if="data && data.foto_img" class="w-[82px] h-[90px] rounded-2xl shadow-xl overflow-hidden bg-white border border-gray-100">
             <img :src="data.foto_img" class="w-full h-full object-cover" />
           </div>
           <div v-else class="w-[82px] h-[90px] bg-gray-200 rounded-2xl shadow-xl flex items-center justify-center text-[10px] text-gray-400">FOTO</div>
@@ -63,11 +63,11 @@
         </div>
 
         <!-- Footer Logo Area -->
-        <div class="mt-auto w-full px-4 pb-8">
+        <div class="mt-auto w-full px-2 pb-6">
           <div v-if="data.footer_img">
-            <img :src="data.footer_img" class="w-full h-auto max-h-16 object-contain" />
+            <img :src="data.footer_img" class="w-full h-auto max-h-12 object-contain" />
           </div>
-          <div v-else class="w-full h-16 border-t flex items-center justify-center text-[8px] text-gray-300 italic uppercase">
+          <div v-else class="w-full h-10 border-t border-dashed flex items-center justify-center text-[8px] text-gray-300 italic uppercase">
             Logo Institucional
           </div>
         </div>
