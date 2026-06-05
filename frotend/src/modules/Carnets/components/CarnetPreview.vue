@@ -13,16 +13,6 @@
       />
       <span class="text-xs font-mono w-10 text-center">{{ Math.round(zoom * 100) }}%</span>
       <button @click="zoom = 1" class="text-[10px] bg-white px-2 py-1 border rounded shadow-sm hover:bg-gray-50">Reset</button>
-      
-      <button 
-        @click="downloadPDF" 
-        class="ml-auto flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-[10px] font-bold uppercase transition-colors"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-        </svg>
-        Descargar PDF
-      </button>
     </div>
 
     <div 
@@ -159,31 +149,6 @@ const toDataURL = async (url: string): Promise<string> => {
   });
 };
 
-const downloadPDF = async () => {
-  const elements = document.querySelectorAll('.carnet-paper');
-  if (elements.length === 0) return;
-
-  const doc = new jsPDF({
-    orientation: 'portrait',
-    unit: 'mm',
-    format: [54, 85.7]
-  });
-
-  for (let i = 0; i < elements.length; i++) {
-    const canvas = await html2canvas(elements[i] as HTMLElement, {
-      scale: 3,
-      useCORS: true,
-      logging: false,
-      backgroundColor: null
-    });
-
-    const imgData = canvas.toDataURL('image/png');
-    if (i > 0) doc.addPage([54, 85.7], 'portrait');
-    doc.addImage(imgData, 'PNG', 0, 0, 54, 85.7);
-  }
-
-  window.open(doc.output('bloburl'), '_blank');
-};
 </script>
 
 <style scoped>
