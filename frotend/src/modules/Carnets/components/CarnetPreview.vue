@@ -144,6 +144,7 @@ onMounted(fetchLastActiveConfig);
 
 const toDataURL = (url: string): Promise<string> => {
   return new Promise((resolve, reject) => {
+    if (!url) return reject('No URL provided');
     const img = new Image();
     img.crossOrigin = 'Anonymous';
     img.onload = () => {
@@ -151,11 +152,17 @@ const toDataURL = (url: string): Promise<string> => {
       canvas.width = img.width;
       canvas.height = img.height;
       const ctx = canvas.getContext('2d');
-      ctx?.drawImage(img, 0, 0);
-      resolve(canvas.toDataURL('image/png'));
+      if (!ctx) return reject('Could not get canvas context');
+      ctx.drawImage(img, 0, 0);
+      try {
+        resolve(canvas.toDataURL('image/png'));
+      } catch (e) {
+        reject(e);
+      }
     };
-    img.onerror = reject;
-    img.src = url;
+    img.onerror = () => reject(`Failed to load image at ${url}`);
+    // Append timestamp to bypass potential cache CORS issues
+    img.src = url.includes('data:') ? url : `${url}${url.includes('?') ? '&' : '?'}t=${Date.now()}`;
   });
 };
 
