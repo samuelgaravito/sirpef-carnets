@@ -261,19 +261,19 @@ const downloadPDF = async () => {
 
   doc.setTextColor(30, 58, 138);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(14);
-  doc.text((props.form.solicitante || 'NOMBRE APELLIDO').toUpperCase(), width / 2, 50, { align: 'center', maxWidth: 45 });
+  doc.setFontSize(12);
+  doc.text((props.form.solicitante || 'NOMBRE APELLIDO').toUpperCase(), width / 2, 50, { align: 'center', maxWidth: 40, lineHeightFactor: 1.1 });
 
   doc.setTextColor(107, 114, 128);
   doc.setFontSize(8);
-  doc.text(`C.I. ${props.form.cedula || 'V-00.000.000'}`, width / 2, 55, { align: 'center' });
+  doc.text(`C.I. ${props.form.cedula || 'V-00.000.000'}`, width / 2, 56, { align: 'center' });
 
   doc.setTextColor(75, 85, 99);
-  doc.setFontSize(9);
-  doc.text(props.form.cargo || 'Cargo que ostenta', width / 2, 60, { align: 'center', maxWidth: 45 });
-  
   doc.setFontSize(8);
-  doc.text(props.form.oficina || 'Oficina / Unidad', width / 2, 64, { align: 'center', maxWidth: 45 });
+  doc.text(props.form.cargo || 'Cargo que ostenta', width / 2, 61, { align: 'center', maxWidth: 42, lineHeightFactor: 1 });
+  
+  doc.setFontSize(7);
+  doc.text(props.form.oficina || 'Oficina / Unidad', width / 2, 66, { align: 'center', maxWidth: 42, lineHeightFactor: 1 });
 
   if (props.form.footer_img) {
     try {
