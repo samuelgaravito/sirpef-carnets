@@ -48,7 +48,7 @@
 
         <!-- Data below photo -->
         <div class="text-center w-full px-4 mb-4">
-          <div class="text-xl font-black text-[#1e3a8a] uppercase leading-tight tracking-tighter mb-1">
+          <div class="text-base font-black text-[#1e3a8a] uppercase leading-tight tracking-tighter mb-1">
             {{ data.solicitante || 'NOMBRE APELLIDO' }}
           </div>
           <div class="text-[9px] font-bold text-gray-500 mt-1">
