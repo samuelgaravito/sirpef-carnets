@@ -173,32 +173,32 @@ const downloadPDF = async () => {
   if (props.data.bg_img) {
     try {
       const bgData = props.data.bg_img.startsWith('data:') ? props.data.bg_img : await toDataURL(props.data.bg_img);
-      doc.addImage(bgData, 'PNG', 0, -4, width, height * 0.55);
+      doc.addImage(bgData, 'PNG', 0, 0, width, height * 0.55);
     } catch (e) { console.error("Error loading bg_img", e); }
   }
 
   if (props.data.foto_img) {
     try {
       const fotoData = props.data.foto_img.startsWith('data:') ? props.data.foto_img : await toDataURL(props.data.foto_img);
-      doc.addImage(fotoData, 'PNG', 16, 24, 22, 24);
+      doc.addImage(fotoData, 'PNG', 16, 22, 22, 24);
     } catch (e) { console.error("Error loading foto_img", e); }
   }
 
   doc.setTextColor(30, 58, 138);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(14);
-  doc.text((props.data.solicitante || 'NOMBRE APELLIDO').toUpperCase(), width / 2, 54, { align: 'center', maxWidth: 45 });
+  doc.text((props.data.solicitante || 'NOMBRE APELLIDO').toUpperCase(), width / 2, 50, { align: 'center', maxWidth: 45 });
 
   doc.setTextColor(107, 114, 128);
   doc.setFontSize(8);
-  doc.text(`C.I. ${props.data.cedula || 'V-00.000.000'}`, width / 2, 59, { align: 'center' });
+  doc.text(`C.I. ${props.data.cedula || 'V-00.000.000'}`, width / 2, 55, { align: 'center' });
 
   doc.setTextColor(75, 85, 99);
   doc.setFontSize(9);
-  doc.text(props.data.cargo || 'Cargo que ostenta', width / 2, 64, { align: 'center', maxWidth: 45 });
+  doc.text(props.data.cargo || 'Cargo que ostenta', width / 2, 60, { align: 'center', maxWidth: 45 });
   
   doc.setFontSize(8);
-  doc.text(props.data.oficina || 'Oficina / Unidad', width / 2, 68, { align: 'center', maxWidth: 45 });
+  doc.text(props.data.oficina || 'Oficina / Unidad', width / 2, 64, { align: 'center', maxWidth: 45 });
 
   if (props.data.footer_img) {
     try {
@@ -237,7 +237,7 @@ const downloadPDF = async () => {
   const splitBottom = doc.splitTextToSize(props.data.reverso_texto_inferior || 'Este carnet es personal e intransferible.', width - 10);
   doc.text(splitBottom, 5, 75);
 
-  doc.save(`carnet_${props.data.cedula || 'nuevo'}.pdf`);
+  window.open(doc.output('bloburl'), '_blank');
 };
 </script>
 
