@@ -63,7 +63,7 @@
         </div>
 
         <!-- Footer Logo Area -->
-        <div class="absolute bottom-6 left-0 w-full px-2">
+        <div class="absolute bottom-0 left-0 w-full px-2">
           <div v-if="data.footer_img">
             <img :src="data.footer_img" class="w-full h-auto max-h-12 object-contain" />
           </div>
