@@ -56,15 +56,6 @@
         </div>
       </div>
 
-      <!-- Save Personal Info Button -->
-      <div class="flex justify-end gap-2 pt-4">
-        <button 
-          @click="saveInfo"
-          class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white text-xs font-bold uppercase rounded shadow-md transition-colors"
-        >
-          Guardar Datos de Persona
-        </button>
-      </div>
     </div>
 
 

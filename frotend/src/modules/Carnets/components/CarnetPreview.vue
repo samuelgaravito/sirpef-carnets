@@ -2,6 +2,16 @@
   <div v-if="data" class="flex flex-col items-center">
     <!-- Zoom Controls -->
     <div class="mb-4 flex items-center gap-4 bg-gray-100 p-2 rounded-lg border print:hidden">
+      <button 
+        @click="saveInfo"
+        class="px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white text-[10px] font-bold uppercase rounded shadow-sm transition-colors flex items-center gap-1"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+        </svg>
+        Guardar
+      </button>
+      <div class="h-6 w-px bg-gray-300 mx-1"></div>
       <span class="text-xs font-bold text-gray-600 uppercase">Zoom Vista:</span>
       <input 
         type="range" 
@@ -99,6 +109,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import Http from '@/utils/Http';
+import { alerta } from '@/utils/alert';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -111,6 +122,27 @@ const props = defineProps({
     default: () => ({})
   }
 });
+
+const emit = defineEmits(['saved']);
+
+const saveInfo = async () => {
+  try {
+    const payload = {
+      solicitante: props.data.solicitante,
+      cedula: props.data.cedula,
+      cargo: props.data.cargo,
+      oficina: props.data.oficina,
+      foto_img: props.data.foto_img
+    };
+
+    const response = await Http.post('/api/registro/carnets', payload);
+    alerta('Éxito', 'Datos guardados exitosamente', 'success');
+    emit('saved', response.data);
+  } catch (error: any) {
+    console.error(error);
+    alerta('Error', 'Error al guardar los datos: ' + (error.response?.data?.error || error.message), 'error');
+  }
+};
 
 const fetchLastActiveConfig = async () => {
   try {
