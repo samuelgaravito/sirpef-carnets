@@ -59,6 +59,7 @@
       <!-- Save Button Information -->
       <div class="flex justify-end gap-2 pt-2">
         <button 
+          v-if="!isSaved"
           @click="saveInfo"
           class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white text-xs font-bold uppercase rounded shadow-md transition-colors flex items-center gap-2"
         >
@@ -66,6 +67,23 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
           </svg>
           Guardar Información
+        </button>
+        <button 
+          v-else
+          @click="printCarnet"
+          class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase rounded shadow-md transition-colors flex items-center gap-2"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+          </svg>
+          Imprimir Carnet
+        </button>
+        <button 
+          v-if="isSaved"
+          @click="resetForm"
+          class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white text-xs font-bold uppercase rounded shadow-md transition-colors"
+        >
+          Nuevo
         </button>
       </div>
 
@@ -150,6 +168,7 @@ const props = defineProps({
 const emit = defineEmits(['save-config', 'saved']);
 
 const activeTab = ref('info');
+const isSaved = ref(false);
 const ministerios = ref<any[]>([]);
 
 const fetchMinisterios = async () => {
@@ -218,6 +237,7 @@ const saveInfo = async () => {
 
     const response = await Http.post('/api/registro/carnets', payload);
     alerta('Éxito', 'Datos guardados exitosamente', 'success');
+    isSaved.value = true;
     emit('saved', response.data);
   } catch (error: any) {
     console.error(error);
@@ -239,6 +259,19 @@ const handleImage = (event, type) => {
     };
     reader.readAsDataURL(file);
   }
+};
+
+const printCarnet = () => {
+  window.print();
+};
+
+const resetForm = () => {
+  isSaved.value = false;
+  props.form.solicitante = '';
+  props.form.cedula = '';
+  props.form.cargo = '';
+  props.form.oficina = '';
+  props.form.foto_img = null;
 };
 
 const toDataURL = async (url: string): Promise<string> => {
