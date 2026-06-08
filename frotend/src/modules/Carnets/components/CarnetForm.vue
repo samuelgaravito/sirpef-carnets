@@ -56,6 +56,15 @@
         </div>
       </div>
 
+      <!-- Save Personal Info Button -->
+      <div class="flex justify-end gap-2 pt-4">
+        <button 
+          @click="saveInfo"
+          class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white text-xs font-bold uppercase rounded shadow-md transition-colors"
+        >
+          Guardar Datos de Persona
+        </button>
+      </div>
     </div>
 
 
@@ -190,6 +199,25 @@ const saveConfig = async () => {
   } catch (error: any) {
     console.error(error);
     alerta('Error', 'Error al guardar la configuración: ' + (error.response?.data?.error || error.message), 'error');
+  }
+};
+
+const saveInfo = async () => {
+  try {
+    const payload = {
+      solicitante: props.form.solicitante,
+      cedula: props.form.cedula,
+      cargo: props.form.cargo,
+      oficina: props.form.oficina,
+      foto_img: props.form.foto_img
+    };
+
+    const response = await Http.post('/api/registro/carnets', payload);
+    alerta('Éxito', 'Datos guardados exitosamente', 'success');
+    emit('saved', response.data);
+  } catch (error: any) {
+    console.error(error);
+    alerta('Error', 'Error al guardar los datos: ' + (error.response?.data?.error || error.message), 'error');
   }
 };
 
