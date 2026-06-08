@@ -16,7 +16,7 @@ class UnidadAdscritaService {
 
     static public function indexMinisterios()
     {
-        $ministerios = Ministerio::all();
+        $ministerios = UnidadAdscrita::all();
 
         return response()->json(['ministerios' => $ministerios]);
     }
@@ -33,7 +33,7 @@ class UnidadAdscritaService {
 
     static public function storeMinisterio(Request $request)
     {
-        $ministerio = new Ministerio();
+        $ministerio = new UnidadAdscrita();
 
         $ministerio->nombre = $request->input('nombre');
 
@@ -49,7 +49,7 @@ class UnidadAdscritaService {
 
     static public function showMinisterio($id)
     {
-        $ministerio = Ministerio::find($id);
+        $ministerio = UnidadAdscrita::find($id);
 
         return response()->json(['ministerio' => $ministerio]);
     }
@@ -59,7 +59,7 @@ class UnidadAdscritaService {
     {
         // You may need to adjust this function to fit your needs
         // since there's no Tipo model in the provided code
-        $ministerio = Ministerio::find($id);
+        $ministerio = UnidadAdscrita::find($id);
         $tipos = Tipo::all();
         return response()->json(['ministerio' => $ministerio, 'tipos' => $tipos]);
     }
@@ -67,7 +67,7 @@ class UnidadAdscritaService {
 
     static public function updateMinisterio(Request $request, $id)
     {
-        $ministerio = Ministerio::find($id);
+        $ministerio = UnidadAdscrita::find($id);
 
         $ministerio->nombre = $request->input('nombre');
 
@@ -83,7 +83,7 @@ class UnidadAdscritaService {
 
     static public function destroyMinisterio($id)
     {
-        $ministerio = Ministerio::find($id);
+        $ministerio = UnidadAdscrita::find($id);
 
         $ministerio->delete();
 
@@ -95,7 +95,7 @@ class UnidadAdscritaService {
     static public function getMinisterio()
     {
         $excludedIds = [0]; // remove decimal values
-        $ministerio = Ministerio::all(['id','nombre']);
+        $ministerio = UnidadAdscrita::all(['id','nombre']);
         return response()->json(
             $ministerio,
         );
