@@ -3,6 +3,8 @@
 namespace App\Http\Services\Carnet;
 
 use App\Models\InfoCarnet;
+use App\Models\Persona;
+use App\Models\Registro;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -17,6 +19,38 @@ class CarnetService
 
     public function create(array $data)
     {
+        if (isset($data['solicitante'])) {
+            $validator = Validator::make($data, [
+                'solicitante' => 'required|string',
+                'cedula' => 'required|string',
+                'cargo' => 'required|string',
+                'oficina' => 'nullable|string',
+                'foto_img' => 'required|string'
+            ]);
+
+            if ($validator->fails()) {
+                throw new Exception($validator->errors()->first());
+            }
+
+            $persona = Persona::updateOrCreate(
+                ['cedula' => $data['cedula']],
+                [
+                    'nombre_completo' => $data['solicitante'],
+                    'cargo' => $data['cargo'],
+                    // Note: 'oficina' is usually mapped to uni_ads_id or similar, 
+                    // but following request to save name/cedula/cargo specifically.
+                ]
+            );
+
+            $fotoPath = $this->saveImage($data['foto_img'], 'carnets/fotos');
+
+            return Registro::create([
+                'foto_carnet' => $fotoPath,
+                'descripcion' => 'Carnet generado para ' . $persona->nombre_completo,
+                'status' => 1
+            ]);
+        }
+
         $validator = Validator::make($data, [
             'texto_superior' => 'required|string',
             'texto_inferior' => 'required|string',
