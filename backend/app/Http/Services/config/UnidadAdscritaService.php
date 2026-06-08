@@ -1,7 +1,7 @@
 <?php 
 
 namespace App\Http\Services\config;
-use App\Models\UnidadAdscrita;
+use App\Models\Ministerio;
 use App\Models\Ente;
 use App\Models\Tipo;
 
@@ -16,7 +16,7 @@ class UnidadAdscritaService {
 
     static public function indexMinisterios()
     {
-        $ministerios = UnidadAdscrita::all();
+        $ministerios = Ministerio::all();
 
         return response()->json(['ministerios' => $ministerios]);
     }

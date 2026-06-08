@@ -16,43 +16,28 @@ return [
     */
 
     'paths' => [
-      //'*',
-      'api/*',
-      'login',
-      'logout',
-      'register',
-      'user/password',
-      'forgot-password',
-      'reset-password',
-      'sanctum/csrf-cookie',
-      'user/profile-information',
-      'email/verification-notification',
+        'api/*',
+        'storage/*', // <-- ESTA ES LA LINEA CRUCIAL PARA TUS IMÁGENES
+        'login',
+        'logout',
+        'register',
+        'user/password',
+        'forgot-password',
+        'reset-password',
+        'sanctum/csrf-cookie',
+        'user/profile-information',
+        'email/verification-notification',
     ],
+    
     'allowed_methods' => ['*'],
-    'allowed_origins' => ['*'],
+    
+    // Si usas supports_credentials => true, NO puedes dejar ['*'] aquí.
+    // Coloca la URL exacta desde donde abres tu frontend en Vue (ejemplo: http://localhost:5173 o la IP/dominio que uses)
+    'allowed_origins' => ['http://localhost:5173', 'http://devsirpef.mppef.gob.ve:5173'], 
+    
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
     'exposed_headers' => [],
     'max_age' => 0,
     'supports_credentials' => true,
-
-
-
-    /*
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
-
-    'allowed_methods' => ['*'],
-
-    'allowed_origins' => ['*'],
-
-    'allowed_origins_patterns' => [],
-
-    'allowed_headers' => ['*'],
-
-    'exposed_headers' => [],
-
-    'max_age' => 0,
-
-    'supports_credentials' => false,
-    */
 ];

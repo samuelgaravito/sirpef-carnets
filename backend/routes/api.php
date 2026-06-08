@@ -63,6 +63,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
         
  
     
+//CARNETS
+
+     Route::prefix('carnets')->group(function () {
+            Route::get('/', [CarnetController::class, 'index']);
+            Route::post('/', [CarnetController::class, 'store']);
+            Route::get('/{id}', [CarnetController::class, 'show']);
+            Route::put('/{id}', [CarnetController::class, 'update']);
+            Route::delete('/{id}', [CarnetController::class, 'destroy']);
+        });
      
         //RegistroController
 
@@ -216,13 +225,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         
         Route::get('/unidades-adscritas', [EstadisticaController::class, 'unidadesAdscritasDelUsuario']);
 
-        Route::prefix('carnets')->group(function () {
-            Route::get('/', [CarnetController::class, 'index']);
-            Route::post('/', [CarnetController::class, 'store']);
-            Route::get('/{id}', [CarnetController::class, 'show']);
-            Route::put('/{id}', [CarnetController::class, 'update']);
-            Route::delete('/{id}', [CarnetController::class, 'destroy']);
-        });
+       
 
     });
     
