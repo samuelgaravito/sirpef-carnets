@@ -46,7 +46,7 @@ class CarnetService
                     'persona_id' => $persona->id,
                     'evento_id' => auth()->user()->configUser->evento_activo ?? null
                 ],
-                ['estatus' => true]
+                ['estatus' => 'activo']
             );
 
             $lastInfoCarnet = InfoCarnet::where('estatus', true)->latest()->first();
