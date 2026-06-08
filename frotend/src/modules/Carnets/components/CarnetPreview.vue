@@ -102,7 +102,7 @@ import Http from '@/utils/Http';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
-const zoom = ref(1);
+const zoom = ref(1.5);
 
 const props = defineProps({
   data: {

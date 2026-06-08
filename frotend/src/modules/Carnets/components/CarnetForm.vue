@@ -39,15 +39,15 @@
           </div>
           <div class="flex flex-col">
             <label class="text-[10px] font-bold text-gray-500">OFICINA</label>
-            <input 
+            <select 
               v-model="form.oficina" 
-              list="ministerios-list"
-              placeholder="Buscar o escribir oficina..."
-              class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" 
-            />
-            <datalist id="ministerios-list">
-              <option v-for="m in ministerios" :key="m.id" :value="m.nombre"></option>
-            </datalist>
+              class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none"
+            >
+              <option value="" disabled>Seleccione una oficina...</option>
+              <option v-for="m in ministerios" :key="m.id" :value="m.nombre">
+                {{ m.nombre }}
+              </option>
+            </select>
           </div>
           <div class="flex flex-col">
             <label class="text-[10px] font-bold text-gray-500">FECHA DE EMISIÓN</label>
@@ -141,7 +141,7 @@ const ministerios = ref<any[]>([]);
 
 const fetchMinisterios = async () => {
   try {
-    const response = await Http.get('/api/ministerios');
+    const response = await Http.get('/api/config/ministerio');
     ministerios.value = response.data;
   } catch (error) {
     console.error("Error al cargar ministerios:", error);
