@@ -5,6 +5,7 @@ namespace App\Http\Services\Carnet;
 use App\Models\InfoCarnet;
 use App\Models\Persona;
 use App\Models\Registro;
+use App\Models\EventoPersona;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -37,14 +38,24 @@ class CarnetService
                 [
                     'nombre_completo' => $data['solicitante'],
                     'cargo' => $data['cargo'],
-                    // Note: 'oficina' is usually mapped to uni_ads_id or similar, 
-                    // but following request to save name/cedula/cargo specifically.
                 ]
             );
+
+            $eventoPersona = EventoPersona::updateOrCreate(
+                [
+                    'persona_id' => $persona->id,
+                    'evento_id' => auth()->user()->configUser->evento_activo ?? null
+                ],
+                ['estatus' => 1]
+            );
+
+            $lastInfoCarnet = InfoCarnet::where('estatus', true)->latest()->first();
 
             $fotoPath = $this->saveImage($data['foto_img'], 'carnets/fotos');
 
             return Registro::create([
+                'evento_persona_id' => $eventoPersona->id,
+                'info_carnet_id' => $lastInfoCarnet ? $lastInfoCarnet->id : null,
                 'foto_carnet' => $fotoPath,
                 'descripcion' => 'Carnet generado para ' . $persona->nombre_completo,
                 'status' => 1
