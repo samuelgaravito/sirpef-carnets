@@ -141,8 +141,8 @@ const ministerios = ref<any[]>([]);
 
 const fetchMinisterios = async () => {
   try {
-    const response = await Http.get('/api/config/ministerio');
-    ministerios.value = response.data;
+    const response = await Http.get('/api/ministerios');
+    ministerios.value = response.data.ministerios;
   } catch (error) {
     console.error("Error al cargar ministerios:", error);
   }
