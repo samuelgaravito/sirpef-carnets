@@ -32,7 +32,7 @@
       <!-- ANVERSO -->
     <div class="carnet-paper bg-white print:shadow-none text-black text-[10pt] font-arial leading-snug w-[5.4cm] h-[8.57cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden">
       <!-- Background Image (Top Half) -->
-      <div v-if="data && data.bg_img" class="absolute top-0 left-0 w-full h-[50%] z-0">
+      <div v-if="data && data.bg_img" class="absolute top-0 left-0 w-full h-[45%] z-0 px-1">
         <img :src="data.bg_img" class="w-full h-full object-cover" />
       </div>
 
