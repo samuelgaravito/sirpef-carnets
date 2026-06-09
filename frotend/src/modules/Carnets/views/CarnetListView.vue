@@ -42,7 +42,7 @@ const carnets = ref([]);
 
 const fetchCarnets = async () => {
   try {
-    const response = await axios.get('/api/carnets/registros');
+    const response = await axios.get('/api/registro/carnets/registros');
     carnets.value = response.data;
   } catch (error) {
     console.error("Error fetching carnets:", error);

@@ -67,6 +67,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
      Route::prefix('carnets')->group(function () {
             Route::get('/', [CarnetController::class, 'index']);
+            Route::get('/registros', [CarnetController::class, 'registros']);
             Route::post('/', [CarnetController::class, 'store']);
             Route::get('/{id}', [CarnetController::class, 'show']);
             Route::put('/{id}', [CarnetController::class, 'update']);
