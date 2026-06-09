@@ -8,6 +8,7 @@ use App\Models\Registro;
 use App\Models\EventoPersona;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB; // <-- Importamos DB para la transacción
 use Illuminate\Support\Str;
 use Exception;
 
@@ -33,35 +34,54 @@ class CarnetService
                 throw new Exception($validator->errors()->first());
             }
 
-            $persona = Persona::updateOrCreate(
-                ['cedula' => $data['cedula']],
-                [
-                    'nombre_completo' => $data['solicitante'],
-                    'cargo' => $data['cargo'],
-                ]
-            );
+            // Usamos una transacción para asegurar que los cambios de estatus sean atómicos
+            return DB::transaction(function () use ($data) {
+                
+                $persona = Persona::updateOrCreate(
+                    ['cedula' => $data['cedula']],
+                    [
+                        'nombre_completo' => $data['solicitante'],
+                        'cargo' => $data['cargo'],
+                    ]
+                );
 
-            $eventoPersona = EventoPersona::updateOrCreate(
-                [
-                    'persona_id' => $persona->id,
-                    'evento_id' => auth()->user()->configUser->evento_activo ?? null
-                ],
-                ['estatus' => 'activo']
-            );
+                // Nota: Asegúrate de que el 'estatus' aquí cumpla con los CHECK de Postgres si aplica
+                $eventoPersona = EventoPersona::updateOrCreate(
+                    [
+                        'persona_id' => $persona->id,
+                        'evento_id' => auth()->user()->configUser->evento_activo ?? null
+                    ],
+                    ['estatus' => 'activo'] 
+                );
 
-            $lastInfoCarnet = InfoCarnet::where('estatus', true)->latest()->first();
+                // --- LÓGICA DE DESACTIVACIÓN DEL REGISTRO ANTERIOR ---
+                // Buscamos el último registro que pertenezca a este evento_persona
+                $ultimoRegistro = Registro::where('evento_persona_id', $eventoPersona->id)
+                    ->latest()
+                    ->first();
 
-            $fotoPath = $this->saveImage($data['foto_img'], 'carnets/fotos');
+                // Si existe un registro previo, cambiamos su estatus a false (o 0)
+                if ($ultimoRegistro) {
+                    $ultimoRegistro->update([
+                        'status' => 0 // Cambiar a false o 'inactivo' según el tipo de dato de tu columna 'status'
+                    ]);
+                }
+                // -----------------------------------------------------
 
-            return Registro::create([
-                'evento_persona_id' => $eventoPersona->id,
-                'info_carnet_id' => $lastInfoCarnet ? $lastInfoCarnet->id : null,
-                'foto_carnet' => $fotoPath,
-                'descripcion' => 'Carnet generado para ' . $persona->nombre_completo,
-                'status' => 1
-            ]);
+                $lastInfoCarnet = InfoCarnet::where('estatus', true)->latest()->first();
+                $fotoPath = $this->saveImage($data['foto_img'], 'carnets/fotos');
+
+                return Registro::create([
+                    'evento_persona_id' => $eventoPersona->id,
+                    'info_carnet_id' => $lastInfoCarnet ? $lastInfoCarnet->id : null,
+                    'foto_carnet' => $fotoPath,
+                    'descripcion' => 'Carnet generado para ' . $persona->nombre_completo,
+                    'status' => 1 // El nuevo carnet nace activo
+                ]);
+            });
         }
 
+        // Resto del código para la creación de configuraciones InfoCarnet...
         $validator = Validator::make($data, [
             'texto_superior' => 'required|string',
             'texto_inferior' => 'required|string',
