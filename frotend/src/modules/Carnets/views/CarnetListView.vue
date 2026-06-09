@@ -20,9 +20,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="carnet in carnets" :key="carnet.id">
-            <td class="text-center">{{ carnet.cedula }}</td>
-            <td class="text-center">{{ carnet.solicitante }}</td>
+          <tr v-for="registro in carnets" :key="registro.id">
+            <td class="text-center">{{ registro.evento_persona?.persona?.cedula }}</td>
+            <td class="text-center">{{ registro.evento_persona?.persona?.nombre_completo }}</td>
             <td class="text-center">
               <button class="text-blue-600 hover:underline font-bold">Ver</button>
             </td>
@@ -34,8 +34,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import Welcome from "@/components/sirpef/welcome.vue";
+import axios from 'axios';
 
 const carnets = ref([]);
+
+const fetchCarnets = async () => {
+  try {
+    const response = await axios.get('/api/carnets/registros');
+    carnets.value = response.data;
+  } catch (error) {
+    console.error("Error fetching carnets:", error);
+  }
+};
+
+onMounted(() => {
+  fetchCarnets();
+});
 </script>

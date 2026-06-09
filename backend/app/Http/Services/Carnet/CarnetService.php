@@ -19,6 +19,11 @@ class CarnetService
         return InfoCarnet::all();
     }
 
+    public function getAllRegistros()
+    {
+        return Registro::with(['evento_persona.persona'])->latest()->get();
+    }
+
     public function create(array $data)
     {
         if (isset($data['solicitante'])) {
