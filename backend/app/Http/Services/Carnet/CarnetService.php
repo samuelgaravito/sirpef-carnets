@@ -24,6 +24,9 @@ class CarnetService
         return Registro::with(['evento_persona.persona'])->latest()->get();
     }
 
+
+
+    
     public function create(array $data)
     {
         if (isset($data['solicitante'])) {
