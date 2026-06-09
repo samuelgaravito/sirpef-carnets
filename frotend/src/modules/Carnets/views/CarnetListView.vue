@@ -36,13 +36,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import Welcome from "@/components/sirpef/welcome.vue";
-import axios from 'axios';
+import Http from "@/utils/Http";
 
 const carnets = ref([]);
 
 const fetchCarnets = async () => {
   try {
-    const response = await axios.get('/api/registro/carnets/registros');
+    const response = await Http.get('/api/registro/carnets/registros');
     carnets.value = response.data;
   } catch (error) {
     console.error("Error fetching carnets:", error);
