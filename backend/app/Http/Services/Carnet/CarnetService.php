@@ -21,7 +21,7 @@ class CarnetService
 
     public function getAllRegistros()
     {
-        return Registro::with(['evento_persona.persona'])->latest()->get();
+        return Registro::with(['eventoPersona.persona'])->latest()->get();
     }
 
 

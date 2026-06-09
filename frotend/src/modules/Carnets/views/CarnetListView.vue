@@ -21,8 +21,8 @@
         </thead>
         <tbody>
           <tr v-for="registro in carnets" :key="registro.id">
-            <td class="text-center">{{ registro.evento_persona?.persona?.cedula }}</td>
-            <td class="text-center">{{ registro.evento_persona?.persona?.nombre_completo }}</td>
+            <td class="text-center">{{ registro.evento_persona?.persona?.cedula || registro.evento_persona?.persona?.cedula }}</td>
+            <td class="text-center">{{ registro.evento_persona?.persona?.nombre_completo || registro.evento_persona?.persona?.nombre_completo }}</td>
             <td class="text-center">
               <button class="text-blue-600 hover:underline font-bold">Ver</button>
             </td>
