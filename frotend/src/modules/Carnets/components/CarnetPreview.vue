@@ -67,9 +67,10 @@
           <div v-if="!data.reverso_bg_img" class="text-[6px] text-gray-400 font-bold uppercase">Logo República</div>
         </div>
 
-        <div class="w-full flex-1 px-3 overflow-hidden mt-10 relative z-10">
+        <div class="w-full flex-1 px-[10px] overflow-hidden relative z-10">
+          <div class="h-[1.5cm]"></div>
           
-          <div class="float-right ml-2 mb-1 mt-24 w-[1.5cm] flex flex-col items-center">
+          <div class="float-right ml-2 mt-[65px] mb-1 w-[1.4cm] flex flex-col items-center">
             <div class="w-[1.3cm] h-[1.3cm] border border-black p-[2px] rounded-sm bg-white flex items-center justify-center">
               <img v-if="data.reverso_qr_img" :src="data.reverso_qr_img" class="w-full h-full object-contain" />
               <div v-else class="w-full h-full bg-gray-50 flex items-center justify-center text-[5px] text-center font-bold font-mono uppercase">QR</div>
@@ -77,7 +78,7 @@
             <span class="text-[5px] font-bold uppercase mt-1">Perfil digital</span>
           </div>
 
-          <div class="text-gray-900 leading-[1.2] text-[6.5px] text-left tracking-tighter whitespace-pre-line">
+          <div class="text-gray-900 leading-[1.15] text-[5.5px] text-justify tracking-tight whitespace-pre-line font-medium">
             {{ data.reverso_texto_superior }}
           </div>
 
