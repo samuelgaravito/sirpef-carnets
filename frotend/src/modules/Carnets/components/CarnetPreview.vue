@@ -70,16 +70,23 @@
         <div class="w-full flex-1 px-[35px] overflow-hidden relative z-10 ">
           <div class="h-[1.2cm]"></div>
 
-          <p
-            class="text-gray-900 leading-[1.15] text-[6px] text-justify tracking-tight whitespace-pre-line font-medium">
-            {{ data.reverso_texto_superior }}
-        </p>
+          <ul class="text-gray-900 leading-[1.15] text-[6px] text-justify tracking-tight font-medium list-none p-0 m-0">
+            <li v-for="(line, index) in formatBulletText(data.reverso_texto_superior)" :key="index" class="flex items-start">
+              <span v-if="line.isBullet" class="mr-1 mt-[1px]">•</span>
+              <span class="flex-1">{{ line.content }}</span>
+            </li>
+          </ul>
 
           <div
-            class="text-gray-900 flex gap-2 leading-[1.15] text-[6px] tracking-tight whitespace-pre-line font-medium">
-            <p>{{ data.reverso_texto_inferior }}</p>
+            class="text-gray-900 flex gap-2 leading-[1.15] text-[6px] tracking-tight font-medium mt-1">
+            <ul class="flex-1 list-none p-0 m-0">
+              <li v-for="(line, index) in formatBulletText(data.reverso_texto_inferior)" :key="index" class="flex items-start">
+                <span v-if="line.isBullet" class="mr-1 mt-[1px]">•</span>
+                <span class="flex-1">{{ line.content }}</span>
+              </li>
+            </ul>
 
-            <div class=" w-[1.4cm] flex flex-col items-center">
+            <div class=" w-[1.4cm] flex flex-col items-center flex-shrink-0">
               <div
                 class="w-[1.3cm] h-[1.3cm] border border-black p-[2px] rounded-sm bg-white flex items-center justify-center">
                 <img v-if="data.reverso_qr_img" :src="data.reverso_qr_img" class="w-full h-full object-contain" />
@@ -128,6 +135,17 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['saved']);
+
+const formatBulletText = (text: string) => {
+  if (!text) return [];
+  return text.split('\n').filter(line => line.trim() !== '').map(line => {
+    const isBullet = line.trim().startsWith('•');
+    return {
+      isBullet,
+      content: isBullet ? line.trim().substring(1).trim() : line.trim()
+    };
+  });
+};
 
 const fetchLastActiveConfig = async () => {
   try {
