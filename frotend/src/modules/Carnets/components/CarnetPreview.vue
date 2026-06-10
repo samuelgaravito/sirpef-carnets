@@ -57,16 +57,17 @@
         </div>
       </div>
 
-      <div class="carnet-paper bg-white print:shadow-none text-black font-arial w-[5.4cm] h-[8.57cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden p-2 justify-between">
+      <div class="carnet-paper bg-white print:shadow-none text-black font-arial w-[5.4cm] h-[8.57cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden justify-between">
         
-        <div class="w-full flex justify-end items-center h-[1.3cm] pr-2 pt-1">
-          <div v-if="data && data.reverso_bg_img" class="w-[85%] h-full">
-            <img :src="data.reverso_bg_img" class="w-full h-full object-contain object-right" />
-          </div>
-          <div v-else class="text-[6px] text-gray-400 font-bold uppercase">Logo República</div>
+        <div v-if="data && data.reverso_bg_img" class="absolute top-0 left-0 w-full h-[45%] z-0">
+          <img :src="data.reverso_bg_img" class="w-full h-full object-cover" />
         </div>
 
-        <div class="w-full flex-1 px-1 overflow-hidden mt-1 relative block">
+        <div class="w-full flex justify-end items-center h-[1.3cm] pr-2 pt-1 relative z-10">
+          <div v-if="!data.reverso_bg_img" class="text-[6px] text-gray-400 font-bold uppercase">Logo República</div>
+        </div>
+
+        <div class="w-full flex-1 px-3 overflow-hidden mt-1 relative block z-10">
           
           <div class="float-right ml-1 mb-1 mt-6 w-[32%] flex flex-col items-center">
             <div class="w-[1.3cm] h-[1.3cm] border border-black p-[2px] rounded-sm bg-white flex items-center justify-center">
