@@ -60,7 +60,7 @@
       <div class="carnet-paper bg-white print:shadow-none text-black font-arial w-[5.4cm] h-[8.57cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden justify-between">
         
         <div v-if="data && data.reverso_bg_img" class="absolute top-0 left-0 w-full h-[45%] z-0">
-          <img :src="data.reverso_bg_img" class="w-full h-full object-cover" />
+          <img :src="data.reverso_bg_img" class="w-full object-cover h-[60%]" />
         </div>
 
         <div class="w-full flex justify-end items-center h-[1.3cm] pr-2 pt-1 relative z-10">
@@ -69,15 +69,15 @@
 
         <div class="w-full flex-1 px-3 overflow-hidden mt-1 relative block z-10">
           
-          <div class="float-right ml-1 mb-1 mt-6 w-[32%] flex flex-col items-center">
+          <div class="float-right ml-1 mb-1 mt-32 w-[32%] flex flex-col items-center">
             <div class="w-[1.3cm] h-[1.3cm] border border-black p-[2px] rounded-sm bg-white flex items-center justify-center">
               <img v-if="data.reverso_qr_img" :src="data.reverso_qr_img" class="w-full h-full object-contain" />
               <div v-else class="w-full h-full bg-gray-50 flex items-center justify-center text-[5px] text-center font-bold font-mono uppercase">QR</div>
             </div>
-            <span class="text-[5.5px] font-black mt-1 text-black tracking-tight whitespace-nowrap uppercase font-sans">Perfil digital</span>
+           
           </div>
 
-          <div class="text-[4.8px] text-gray-900 leading-[1.1] font-medium text-left tracking-tighter space-y-[2px]">
+          <div class="text-gray-900 leading-[1.1] text-[6px] text-left tracking-tighter space-y-[2px] mt-10">
             <div class="flex gap-[2px]"><span>•</span><p>Este carnet es de uso exclusivo para el personal que labora en {{ data.oficina || '(nombre del ministerio)' }}.</p></div>
             <div class="flex gap-[2px]"><span>•</span><p>Debe ser utilizado en un lugar visible.</p></div>
             <div class="flex gap-[2px]"><span>•</span><p>Puede ser retenido por la Dirección General de Seguridad cuando lo requiera.</p></div>
