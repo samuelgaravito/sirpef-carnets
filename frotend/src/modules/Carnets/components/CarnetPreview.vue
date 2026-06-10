@@ -69,7 +69,7 @@
 
         <div class="w-full flex-1 px-3 overflow-hidden mt-1 relative block z-10">
           
-          <div class="float-right ml-1 mb-1 mt-32 w-[32%] flex flex-col items-center">
+          <div class="float-right ml-1 mb-1 mt-36 w-[32%] flex flex-col items-center">
             <div class="w-[1.3cm] h-[1.3cm] border border-black p-[2px] rounded-sm bg-white flex items-center justify-center">
               <img v-if="data.reverso_qr_img" :src="data.reverso_qr_img" class="w-full h-full object-contain" />
               <div v-else class="w-full h-full bg-gray-50 flex items-center justify-center text-[5px] text-center font-bold font-mono uppercase">QR</div>
@@ -77,15 +77,8 @@
            
           </div>
 
-          <div class="text-gray-900 leading-[1.1] text-[6px] text-left tracking-tighter space-y-[2px] mt-10">
-            <div class="flex gap-[2px]"><span>•</span><p>Este carnet es de uso exclusivo para el personal que labora en {{ data.oficina || '(nombre del ministerio)' }}.</p></div>
-            <div class="flex gap-[2px]"><span>•</span><p>Debe ser utilizado en un lugar visible.</p></div>
-            <div class="flex gap-[2px]"><span>•</span><p>Puede ser retenido por la Dirección General de Seguridad cuando lo requiera.</p></div>
-            <div class="flex gap-[2px]"><span>•</span><p>Es intransferible.</p></div>
-            <div class="flex gap-[2px]"><span>•</span><p>Se agradece a todas las autoridades Civiles y Militares prestarle la mayor colaboración posible al portador de esta credencial, dentro de las normas legales.</p></div>
-            <div class="flex gap-[2px]"><span>•</span><p>En caso de ser transferido a otra dirección o en caso de vencimiento, debe ser entregado a la Dirección General de Seguridad.</p></div>
-            <div class="flex gap-[2px]"><span>•</span><p>Este carnet no acredita autoridad.</p></div>
-            <div class="flex gap-[2px]"><span>•</span><p>En caso de extravío o pérdida, debe consignar en la dirección general de Seguridad la respectiva denuncia ante el organismo competente.</p></div>
+          <div class="text-gray-900 leading-[1.1] text-[6px] text-left tracking-tighter whitespace-pre-line mt-10">
+            {{ data.reverso_texto_superior }}
           </div>
 
         </div>
