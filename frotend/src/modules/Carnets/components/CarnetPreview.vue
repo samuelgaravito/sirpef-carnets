@@ -99,17 +99,17 @@
           </div>
         </div>
 
-        <div class="w-full h-[1.6cm] flex items-center justify-between px-1 pb-1">
-          <div class="w-[1.3cm] h-[1 cm] flex items-center justify-center ml-1">
+        <div class="w-full h-[1.8cm] flex items-center justify-between px-6 pb-2">
+          <div class="w-[1.4cm] h-[1.4cm] flex items-center justify-center">
             <img v-if="data.reverso_sello_img" :src="data.reverso_sello_img" class="w-full h-full object-contain" />
             <div v-else
               class="w-full h-full rounded-full border border-dashed border-gray-400 flex items-center justify-center text-[5px] text-gray-400 font-bold">
               SELLO</div>
           </div>
 
-          <div class="flex flex-col items-center mr-1">
+          <div class="flex flex-col items-center">
             <div
-              class="w-[1.9cm] h-[0.9cm] bg-gray-200/60 border border-gray-300 rounded flex items-center justify-center overflow-hidden">
+              class="w-[2.2cm] h-[1.1cm] bg-gray-200/60 border border-gray-300 rounded flex items-center justify-center overflow-hidden">
               <img v-if="data.reverso_firma_img" :src="data.reverso_firma_img" class="w-full h-full object-contain" />
               <span v-else class="text-[7px] font-black text-gray-500 uppercase tracking-wider font-mono">FIRMA</span>
             </div>
