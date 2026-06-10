@@ -49,10 +49,10 @@
               </option>
             </select>
           </div>
-          <div class="flex flex-col">
+         <!-- <div class="flex flex-col">
             <label class="text-[10px] font-bold text-gray-500">FECHA DE EMISIÓN</label>
             <input v-model="form.fecha_emision" type="date" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" />
-          </div>
+          </div>-->
         </div>
       </div>
 
