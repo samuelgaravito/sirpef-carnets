@@ -29,8 +29,8 @@
       <!-- Content Container -->
       <div class="relative z-10 flex flex-col items-center h-full">
         <!-- Photo centered -->
-        <div class="mt-[85px] mb-4">
-          <div v-if="data && data.foto_img" class="w-[82px] h-[90px] rounded-2xl shadow-xl overflow-hidden bg-white border border-gray-100">
+        <div class="mt-[85px] mb-2">
+          <div v-if="data && data.foto_img" class="w-[82px] h-[90px] rounded-2xl shadow-xl overflow-hidden bg-white border border-gray-100 mt-4">
             <img :src="data.foto_img" class="w-full h-full object-cover" />
           </div>
           <div v-else class="w-[82px] h-[90px] bg-gray-200 rounded-2xl shadow-xl flex items-center justify-center text-[10px] text-gray-400">FOTO</div>
@@ -38,13 +38,13 @@
 
         <!-- Data below photo -->
         <div class="text-center w-full px-4 mb-4">
-          <div class="text-base font-black text-[#1e3a8a] uppercase leading-tight tracking-tighter mb-1">
+          <div class="text-base font-black text-[#1e3a8a] uppercase leading-tight tracking-tighter ">
             {{ data.solicitante || 'NOMBRE APELLIDO' }}
           </div>
-          <div class="text-[9px] font-bold text-gray-500 mt-1">
+          <div class="text-[9px] font-bold text-gray-500">
             C.I. {{ data.cedula || 'V-00.000.000' }}
           </div>
-          <div class="text-[10px] font-bold text-gray-600 leading-none mt-1">
+          <div class="text-[10px] font-bold text-gray-600 leading-none">
             {{ data.cargo || 'Cargo que ostenta' }}
           </div>
           <div class="text-[9px] font-bold text-gray-600 leading-none mt-1">
@@ -62,9 +62,9 @@
           </div>
         </div>
         
-        <div class="absolute bottom-1 right-2 text-[6px] text-gray-400 font-bold">
+        <!--<div class="absolute bottom-1 right-2 text-[6px] text-gray-400 font-bold">
           Emisión: {{ data.fecha_emision || '00/00/0000' }}
-        </div>
+        </div>-->
       </div>
     </div>
 
