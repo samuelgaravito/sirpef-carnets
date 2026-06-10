@@ -60,15 +60,23 @@
       <div class="carnet-paper bg-white print:shadow-none text-black font-arial w-[5.4cm] h-[8.57cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden p-2 justify-between">
         
         <div class="w-full flex justify-end items-center h-[1.3cm] pr-2 pt-1">
-          <div v-if="data && data.bg_img" class="w-[85%] h-full">
-            <img :src="data.bg_img" class="w-full h-full object-contain object-right" />
+          <div v-if="data && data.reverso_bg_img" class="w-[85%] h-full">
+            <img :src="data.reverso_bg_img" class="w-full h-full object-contain object-right" />
           </div>
           <div v-else class="text-[6px] text-gray-400 font-bold uppercase">Logo República</div>
         </div>
 
-        <div class="flex flex-row w-full flex-1 px-1 gap-1 items-start overflow-hidden mt-1">
+        <div class="w-full flex-1 px-1 overflow-hidden mt-1 relative block">
           
-          <div class="w-[68%] text-[4.8px] text-gray-900 leading-[1.1] font-medium pr-1 text-justify tracking-tighter space-y-[2px]">
+          <div class="float-right ml-1 mb-1 mt-6 w-[32%] flex flex-col items-center">
+            <div class="w-[1.3cm] h-[1.3cm] border border-black p-[2px] rounded-sm bg-white flex items-center justify-center">
+              <img v-if="data.reverso_qr_img" :src="data.reverso_qr_img" class="w-full h-full object-contain" />
+              <div v-else class="w-full h-full bg-gray-50 flex items-center justify-center text-[5px] text-center font-bold font-mono uppercase">QR</div>
+            </div>
+            <span class="text-[5.5px] font-black mt-1 text-black tracking-tight whitespace-nowrap uppercase font-sans">Perfil digital</span>
+          </div>
+
+          <div class="text-[4.8px] text-gray-900 leading-[1.1] font-medium text-left tracking-tighter space-y-[2px]">
             <div class="flex gap-[2px]"><span>•</span><p>Este carnet es de uso exclusivo para el personal que labora en {{ data.oficina || '(nombre del ministerio)' }}.</p></div>
             <div class="flex gap-[2px]"><span>•</span><p>Debe ser utilizado en un lugar visible.</p></div>
             <div class="flex gap-[2px]"><span>•</span><p>Puede ser retenido por la Dirección General de Seguridad cuando lo requiera.</p></div>
@@ -79,12 +87,6 @@
             <div class="flex gap-[2px]"><span>•</span><p>En caso de extravío o pérdida, debe consignar en la dirección general de Seguridad la respectiva denuncia ante el organismo competente.</p></div>
           </div>
 
-          <div class="w-[32%] flex flex-col items-center justify-center mt-12">
-            <div class="w-[1.3cm] h-[1.3cm] border border-black p-[2px] rounded-sm bg-white flex items-center justify-center">
-              <div class="w-full h-full bg-gray-50 flex items-center justify-center text-[5px] text-center font-bold font-mono">QR CODE</div>
-            </div>
-            <span class="text-[5.5px] font-black mt-1 text-black tracking-tight whitespace-nowrap uppercase font-sans">Perfil digital</span>
-          </div>
         </div>
 
         <div class="w-full h-[1.6cm] flex items-end justify-between px-1 pb-1">

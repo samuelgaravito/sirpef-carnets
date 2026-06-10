@@ -129,9 +129,20 @@
         <h3 class="text-sm font-bold text-blue-800 border-b pb-1 uppercase mb-3">Recursos Reverso</h3>
         <div class="space-y-4">
           <div class="p-3 bg-white rounded border">
+            <label class="block text-[10px] font-bold text-gray-700 uppercase mb-2">Imagen Superior (Reverso)</label>
+            <input type="file" @change="handleImage($event, 'reverso_bg')" class="block w-full text-xs text-gray-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700" />
+            <p class="text-[9px] text-gray-400 mt-1">Logo o cintillo superior para el reverso.</p>
+          </div>
+
+          <div class="p-3 bg-white rounded border">
+            <label class="block text-[10px] font-bold text-gray-700 uppercase mb-2">QR Perfil Digital (Reverso)</label>
+            <input type="file" @change="handleImage($event, 'reverso_qr')" class="block w-full text-xs text-gray-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700" />
+          </div>
+
+          <div class="p-3 bg-white rounded border">
             <label class="block text-[10px] font-bold text-gray-700 uppercase mb-2">Sello Institucional (Reverso)</label>
             <input type="file" @change="handleImage($event, 'reverso_sello')" class="block w-full text-xs text-gray-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700" />
-            <p class="text-[9px] text-gray-400 mt-1">Imagen del sello que irá en el centro del reverso.</p>
+            <p class="text-[9px] text-gray-400 mt-1">Imagen del sello que irá en la parte inferior izquierda.</p>
           </div>
 
           <div class="p-3 bg-white rounded border">
@@ -254,6 +265,8 @@ const handleImage = (event, type) => {
       if (type === 'foto') props.form.foto_img = base64String;
       if (type === 'bg') props.form.bg_img = base64String;
       if (type === 'footer') props.form.footer_img = base64String;
+      if (type === 'reverso_bg') props.form.reverso_bg_img = base64String;
+      if (type === 'reverso_qr') props.form.reverso_qr_img = base64String;
       if (type === 'reverso_sello') props.form.reverso_sello_img = base64String;
       if (type === 'reverso_firma') props.form.reverso_firma_img = base64String;
     };
