@@ -69,27 +69,49 @@
     </div>
 
     <!-- REVERSO -->
-    <div class="carnet-paper bg-white print:shadow-none text-black text-[10pt] font-arial leading-snug w-[5.4cm] h-[8.57cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden p-4">
-      
-      <!-- Top Paragraph -->
-      <div class="relative z-10 text-[7px] text-justify leading-tight text-gray-700 mb-auto whitespace-pre-wrap">
-        {{ data.reverso_texto_superior || 'Información institucional superior del reverso.' }}
+    <div class="carnet-paper bg-white print:shadow-none text-black text-[10pt] font-arial leading-tight w-[5.4cm] h-[8.57cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden">
+      <!-- Header Image (from carnetdiseno.png) -->
+      <div v-if="data && data.bg_img" class="w-full h-[18%] pt-2 px-1">
+        <img :src="data.bg_img" class="w-full h-full object-contain" />
       </div>
 
-      <!-- Middle Content (Sello and Firma) -->
-      <div class="relative z-10 flex flex-col items-center justify-center gap-4 flex-1">
-        <div v-if="data.reverso_sello_img" class="w-14 h-auto">
-          <img :src="data.reverso_sello_img" class="w-full h-auto object-contain" />
+      <div class="flex-1 px-4 py-2 flex flex-col relative">
+        <!-- Bullet points text -->
+        <div class="text-[6px] text-gray-800 leading-tight space-y-1 mb-2">
+          <div class="flex gap-1"><span>•</span> <p>Este carnet es de uso exclusivo para el personal que labora en {{ data.oficina || '(nombre del ministerio)' }}.</p></div>
+          <div class="flex gap-1"><span>•</span> <p>Debe ser utilizado en un lugar visible.</p></div>
+          <div class="flex gap-1"><span>•</span> <p>Puede ser retenido por la Dirección General de Seguridad cuando lo requiera.</p></div>
+          <div class="flex gap-1"><span>•</span> <p>Es intransferible.</p></div>
+          <div class="flex gap-1"><span>•</span> <p>Se agradece a todas las autoridades Civiles y Militares prestarle la mayor colaboración posible al portador de esta credencial, dentro de las normas legales.</p></div>
+          <div class="flex gap-1"><span>•</span> <p>En caso de ser transferido a otra dirección o en caso de vencimiento, debe ser entregado a la Dirección General de Seguridad.</p></div>
+          <div class="flex gap-1"><span>•</span> <p>Este carnet no acredita autoridad.</p></div>
+          <div class="flex gap-1"><span>•</span> <p>En caso de extravío o perdida, debe consignar en la dirección general de Seguridad la respectiva denuncia ante el organismo competente.</p></div>
         </div>
-        
-        <div v-if="data.reverso_firma_img" class="flex flex-col items-center w-full">
-          <img :src="data.reverso_firma_img" class="w-20 h-auto" />
+
+        <!-- QR Code and Label (Middle Right) -->
+        <div class="absolute right-4 top-28 flex flex-col items-center">
+          <div class="w-16 h-16 border border-black p-1">
+            <div class="w-full h-full bg-gray-100 flex items-center justify-center text-[8px] text-center">QR CODE</div>
+          </div>
+          <span class="text-[7px] font-bold mt-1">Perfil digital</span>
         </div>
-      </div>
-      
-      <!-- Bottom Paragraph -->
-      <div class="relative z-10 text-[7px] text-justify leading-tight text-gray-700 mt-auto whitespace-pre-wrap">
-        {{ data.reverso_texto_inferior || 'Este carnet es personal e intransferible. Su uso indebido será sancionado. En caso de extravío favor devolverlo a la oficina de recursos humanos.' }}
+
+        <!-- Bottom Row: Sello and Firma -->
+        <div class="mt-auto flex items-end justify-between pb-4">
+          <!-- Sello -->
+          <div v-if="data.reverso_sello_img" class="w-16 h-16 flex items-center justify-center">
+            <img :src="data.reverso_sello_img" class="w-full h-full object-contain" />
+          </div>
+          <div v-else class="w-16 h-16 rounded-full border border-dashed border-gray-300 flex items-center justify-center text-[6px] text-gray-300">SELLO</div>
+
+          <!-- Firma -->
+          <div class="flex flex-col items-center">
+             <div v-if="data.reverso_firma_img" class="w-24 h-12 flex items-center justify-center bg-gray-200/50">
+               <img :src="data.reverso_firma_img" class="w-full h-full object-contain" />
+             </div>
+             <div v-else class="w-24 h-12 bg-gray-200 flex items-center justify-center text-[10px] font-bold text-gray-600 uppercase">FIRMA</div>
+          </div>
+        </div>
       </div>
     </div>
     </div>
