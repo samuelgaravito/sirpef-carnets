@@ -109,7 +109,7 @@
 
           <div class="flex flex-col items-center">
             <div
-              class="w-[2.2cm] h-[1.1cm] bg-gray-200/60 border border-gray-300 rounded flex items-center justify-center overflow-hidden">
+              class="w-[2.2cm] h-[1.1cm] rounded flex items-center justify-center overflow-hidden">
               <img v-if="data.reverso_firma_img" :src="data.reverso_firma_img" class="w-full h-full object-contain" />
               <span v-else class="text-[7px] font-black text-gray-500 uppercase tracking-wider font-mono">FIRMA</span>
             </div>
@@ -124,7 +124,7 @@
 import { ref, onMounted } from 'vue';
 import Http from '@/utils/Http';
 
-const zoom = ref(1.5);
+const zoom = ref(2);
 
 const props = defineProps({
   data: {
