@@ -18,6 +18,7 @@ use App\Http\Controllers\EventoController;
 use App\Http\Controllers\ConstController;
 use App\Http\Controllers\NewLoginController;
 use App\Http\Controllers\FeDeVidaController;
+use App\Http\Controllers\SvaController;
 
 use App\Http\Controllers\PersonaAutorizadaController;
 
