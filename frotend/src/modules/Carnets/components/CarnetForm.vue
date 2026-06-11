@@ -289,6 +289,8 @@ const resetForm = () => {
   props.form.cargo = '';
   props.form.oficina = '';
   props.form.foto_img = null;
+  props.form.reverso_bg_img = null;
+  props.form.reverso_qr_img = null;
 };
 
 const toDataURL = async (url: string): Promise<string> => {

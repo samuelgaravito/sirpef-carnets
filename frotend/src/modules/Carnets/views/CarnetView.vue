@@ -33,7 +33,9 @@ const carnetData = ref({
   reverso_sello_img: null,
   reverso_firma_img: null,
   reverso_texto_superior: '',
-  reverso_texto_inferior: ''
+  reverso_texto_inferior: '',
+  reverso_bg_img: null,
+  reverso_qr_img: null
 });
 
 const printCarnet = () => {
