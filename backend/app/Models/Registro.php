@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Registro extends Model
 {
@@ -16,14 +17,22 @@ class Registro extends Model
         'info_carnet_id',
         'foto_carnet',
         'status',
+        'emision', 
     ];
 
-    public function eventoPersona()
+    /**
+     * Relación: Un registro pertenece a una vinculación EventoPersona.
+     * Cambiado a snake_case para hacer match con el Backend/Frontend.
+     */
+    public function evento_persona(): BelongsTo
     {
         return $this->belongsTo(EventoPersona::class, 'evento_persona_id');
     }
 
-    public function infoCarnet()
+    /**
+     * Relación: Un registro pertenece a una configuración de diseño InfoCarnet.
+     */
+    public function infoCarnet(): BelongsTo
     {
         return $this->belongsTo(InfoCarnet::class, 'info_carnet_id');
     }

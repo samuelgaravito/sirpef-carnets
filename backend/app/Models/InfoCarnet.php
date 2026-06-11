@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class InfoCarnet extends Model
 {
@@ -18,10 +19,15 @@ class InfoCarnet extends Model
         'firma',
         'imagen_fondo',
         'imagen_pie_pagina',
+        'imagen_fondo_reverso',
+        'imagen_qr',           
         'estatus',
     ];
 
-    public function registros()
+    /**
+     * Relación: Una configuración de carnet puede tener muchos registros emitidos.
+     */
+    public function registros(): HasMany
     {
         return $this->hasMany(Registro::class, 'info_carnet_id');
     }
