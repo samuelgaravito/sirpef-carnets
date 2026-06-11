@@ -59,9 +59,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/registro/tipoempleado', [EstadisticaController::class, 'tiposEmpleadoDelUsuario']);
     Route::get('/whoami', [UserController::class, 'getMe']);
     
+Route::prefix('sva')->group(function () {
+        
+ // Apuntamos a obtenerPorCedulaSVA
+    Route::get('/persona/{cedula}', [SvaController::class, 'obtenerPorCedulaSVA']);
+});
+
+
     Route::prefix('registro')->group(function () {
         
- 
+ // Apuntamos a obtenerPorCedulaSVA
+    Route::get('/sva/persona/{cedula}', [SvaController::class, 'obtenerPorCedulaSVA']);
     
 //CARNETS
 

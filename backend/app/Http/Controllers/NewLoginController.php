@@ -37,9 +37,11 @@ class NewLoginController extends Controller
         $attempts = 0;
         $retryDelay = 1;
 
+        $SVA_LINK = ENV('SVA_SERVER_URL');
+
         while ($attempts < $maxRetries) {
             try {
-                $response = $client->post('10.50.0.29:443/auth', [
+                $response = $client->post("{$SVA_LINK}/auth", [
                     'json' => ['token' => $tokenSVA],
                 ]);
 
