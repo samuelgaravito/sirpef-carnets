@@ -247,7 +247,8 @@ const saveInfo = async () => {
       cedula: props.form.cedula,
       cargo: props.form.cargo,
       oficina: props.form.oficina,
-      foto_img: props.form.foto_img
+      foto_img: props.form.foto_img,
+      imagen_qr: props.form.reverso_qr_img
     };
 
     const response = await Http.post('/api/registro/carnets', payload);

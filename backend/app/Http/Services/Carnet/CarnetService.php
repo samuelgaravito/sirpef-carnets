@@ -35,7 +35,8 @@ class CarnetService
                 'cedula' => 'required|string',
                 'cargo' => 'required|string',
                 'oficina' => 'nullable|string',
-                'foto_img' => 'required|string'
+                'foto_img' => 'required|string',
+                'imagen_qr' => 'nullable|string'
             ]);
 
             if ($validator->fails()) {
