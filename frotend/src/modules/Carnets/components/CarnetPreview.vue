@@ -160,6 +160,8 @@ const fetchLastActiveConfig = async () => {
       if (!props.data.reverso_firma_img) props.data.reverso_firma_img = lastActive.firma;
       if (!props.data.bg_img) props.data.bg_img = lastActive.imagen_fondo;
       if (!props.data.footer_img) props.data.footer_img = lastActive.imagen_pie_pagina;
+      if (!props.data.reverso_bg_img) props.data.reverso_bg_img = lastActive.imagen_fondo_reverso;
+      if (!props.data.reverso_qr_img) props.data.reverso_qr_img = lastActive.qr_reverso;
     }
   } catch (error) {
     console.error("Error al cargar previsualización activa:", error);

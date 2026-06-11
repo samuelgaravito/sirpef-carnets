@@ -204,6 +204,8 @@ const fetchLastConfig = async () => {
       props.form.reverso_firma_img = lastActive.firma;
       props.form.bg_img = lastActive.imagen_fondo;
       props.form.footer_img = lastActive.imagen_pie_pagina;
+      props.form.reverso_bg_img = lastActive.imagen_fondo_reverso;
+      props.form.reverso_qr_img = lastActive.qr_reverso;
     }
   } catch (error) {
     console.error("Error al cargar configuración inicial:", error);
@@ -224,6 +226,8 @@ const saveConfig = async () => {
       firma: props.form.reverso_firma_img,
       imagen_fondo: props.form.bg_img,
       imagen_pie_pagina: props.form.footer_img,
+      imagen_fondo_reverso: props.form.reverso_bg_img,
+      qr_reverso: props.form.reverso_qr_img,
       estatus: true
     };
 
