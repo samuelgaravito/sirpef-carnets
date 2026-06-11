@@ -19,8 +19,7 @@ class InfoCarnet extends Model
         'firma',
         'imagen_fondo',
         'imagen_pie_pagina',
-        'imagen_fondo_reverso',
-        'imagen_qr',           
+        'imagen_fondo_reverso',           
         'estatus',
     ];
 

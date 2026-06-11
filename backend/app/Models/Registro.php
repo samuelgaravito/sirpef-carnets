@@ -17,7 +17,8 @@ class Registro extends Model
         'info_carnet_id',
         'foto_carnet',
         'status',
-        'emision', 
+        'emision',
+        'imagen_qr',
     ];
 
     /**
