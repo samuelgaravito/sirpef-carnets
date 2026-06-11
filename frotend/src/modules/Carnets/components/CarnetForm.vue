@@ -31,7 +31,12 @@
           </div>
           <div class="flex flex-col">
             <label class="text-[10px] font-bold text-gray-500">CÉDULA</label>
-            <input v-model="form.cedula" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" />
+            <input 
+              v-model="form.cedula" 
+              @blur="searchSva"
+              placeholder="Presione TAB o click fuera para buscar"
+              class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none" 
+            />
           </div>
           <div class="flex flex-col">
             <label class="text-[10px] font-bold text-gray-500">CARGO</label>
@@ -188,6 +193,30 @@ const fetchMinisterios = async () => {
     ministerios.value = response.data.ministerios;
   } catch (error) {
     console.error("Error al cargar ministerios:", error);
+  }
+};
+
+const searchSva = async () => {
+  if (!props.form.cedula || props.form.cedula.length < 5) return;
+  
+  try {
+    const response = await Http.get(`/api/sva/persona/${props.form.cedula}`);
+    const data = response.data;
+    
+    if (data) {
+      // Assuming SVA returns fields like nombre_completo, cargo, and ministerio_id or ente_nombre
+      if (data.nombre_completo) props.form.solicitante = data.nombre_completo;
+      if (data.cargo) props.form.cargo = data.cargo;
+      
+      // Match the office/ministerio by name if that's what's stored in SVA
+      if (data.ministerio_nombre) {
+          props.form.oficina = data.ministerio_nombre;
+      } else if (data.ente) {
+          props.form.oficina = data.ente;
+      }
+    }
+  } catch (error) {
+    console.error("Persona no encontrada en SVA o error de conexión");
   }
 };
 
