@@ -99,7 +99,6 @@ class CarnetService
             'imagen_fondo' => 'required|string',
             'imagen_pie_pagina' => 'required|string',
             'imagen_fondo_reverso' => 'nullable|string',
-            'qr_reverso' => 'nullable|string',
             'estatus' => 'boolean',
         ]);
 
@@ -116,9 +115,6 @@ class CarnetService
 
         if (!empty($data['imagen_fondo_reverso'])) {
             $data['imagen_fondo_reverso'] = $this->saveImage($data['imagen_fondo_reverso'], 'carnets/reversos_fondos');
-        }
-        if (!empty($data['qr_reverso'])) {
-            $data['qr_reverso'] = $this->saveImage($data['qr_reverso'], 'carnets/reversos_qrs');
         }
 
         return InfoCarnet::create($data);
