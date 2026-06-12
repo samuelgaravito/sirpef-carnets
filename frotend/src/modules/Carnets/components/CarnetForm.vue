@@ -233,6 +233,8 @@ onMounted(() => {
 const saveConfig = async () => {
   try {
     const payload = {
+      texto_superior: '',
+      texto_inferior: '',
       sello: props.form.reverso_sello_img,
       firma: props.form.reverso_firma_img,
       imagen_fondo: props.form.bg_img,
