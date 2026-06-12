@@ -57,65 +57,75 @@
       </div>
 
       <div
-        class="carnet-paper bg-white print:shadow-none text-black font-arial w-[5.4cm] h-[8.57cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden justify-between">
+  class="carnet-paper bg-white print:shadow-none text-black font-arial w-[5.4cm] h-[8.57cm] border rounded-lg relative flex flex-col shadow-md overflow-hidden justify-between">
 
-        <div v-if="data && data.reverso_bg_img" class="absolute top-0 left-0 w-full h-[45%] z-0">
-          <img :src="data.reverso_bg_img" class="w-full object-cover h-[60%]" />
-        </div>
+  <!-- Imagen de Fondo -->
+  <div v-if="data && data.reverso_bg_img" class="absolute top-0 left-0 w-full h-[120%] z-0">
+    <img :src="data.reverso_bg_img" class="w-full object-cover h-[60%]" />
+  </div>
 
-        <div class="w-full flex justify-end items-center h-[1.3cm] pr-2 pt-1 relative z-10">
-          <div v-if="!data.reverso_bg_img" class="text-[6px] text-gray-400 font-bold uppercase">Logo República</div>
-        </div>
+  <!-- Membrete superior alternativo -->
+  <div class="w-full flex justify-end items-center h-[1.3cm] pr-2 pt-1 relative z-10">
+    <div v-if="!data.reverso_bg_img" class="text-[6px] text-gray-400 font-bold uppercase">Logo República</div>
+  </div>
 
-        <div class="w-full flex-1 px-[25px] overflow-hidden relative z-10 ">
-          <div class="h-[1.2cm]"></div>
+  <!-- CUERPO CENTRAL (flex-col y justify-end empujan el QR al fondo) -->
+  <div class="w-full flex-1 px-[20px] pb-1 overflow-hidden relative z-10 flex flex-col justify-end">
+    
+    <div class="h-[1.2cm]"></div>
 
-          <ul class="text-gray-900 leading-[1.15] text-[6px] text-justify tracking-tight font-medium list-none p-0 m-0">
-            <li v-for="(line, index) in formatBulletText(data.reverso_texto_superior)" :key="index" class="flex items-start">
-              <span v-if="line.isBullet" class="mr-1 mt-[1px]">•</span>
-              <span class="flex-1">{{ line.content }}</span>
-            </li>
-          </ul>
+    <!-- TEXTO SUPERIOR COMENTADO -->
+    <!-- <ul class="text-gray-900 leading-[1.15] text-[6px] text-justify tracking-tight font-medium list-none p-0 m-0 w-full">
+      <li v-for="(line, index) in formatBulletText(data.reverso_texto_superior)" :key="index" class="flex items-start">
+        <span v-if="line.isBullet" class="mr-1 mt-[1px]">•</span>
+        <span class="flex-1">{{ line.content }}</span>
+      </li>
+    </ul> -->
 
-          <div
-            class="text-gray-900 flex gap-2 leading-[1.15] text-[6px] tracking-tight font-medium mt-1">
-            <ul class="flex-1 list-none p-0 m-0">
-              <li v-for="(line, index) in formatBulletText(data.reverso_texto_inferior)" :key="index" class="flex items-start">
-                <span v-if="line.isBullet" class="mr-1 mt-[1px]">•</span>
-                <span class="flex-1">{{ line.content }}</span>
-              </li>
-            </ul>
+    <!-- CONTENEDOR DEL QR (w-full flex justify-end lo mueve a la derecha del todo) -->
+    <div class="w-full flex justify-end text-gray-900 leading-[1.15] text-[6px] tracking-tight font-medium mt-1 mb-1">
+      
+      <!-- TEXTO INFERIOR COMENTADO -->
+      <!-- <ul class="flex-1 list-none p-0 m-0">
+        <li v-for="(line, index) in formatBulletText(data.reverso_texto_inferior)" :key="index" class="flex items-start">
+          <span v-if="line.isBullet" class="mr-1 mt-[1px]">•</span>
+          <span class="flex-1">{{ line.content }}</span>
+        </li>
+      </ul> -->
 
-            <div class=" w-[1.4cm] flex flex-col items-center flex-shrink-0">
-              <div
-                class="w-[1.3cm] h-[1.3cm] border border-black p-[2px] rounded-sm bg-white flex items-center justify-center">
-                <img v-if="data.reverso_qr_img" :src="data.reverso_qr_img" class="w-full h-full object-contain" />
-                <div v-else
-                  class="w-full h-full bg-gray-50 flex items-center justify-center text-[5px] text-center font-bold font-mono uppercase">
-                  QR</div>
-              </div>
-              
-            </div>
-          </div>
-        </div>
+      <!-- Bloque contenedor del QR fijado abajo a la derecha -->
+      <div class="w-[1.7cm] flex flex-col items-center flex-shrink-0 mb-1 relative -top-[15px]">
+  <div class="w-[1.4cm] h-[1.3cm] border border-black p-[2px] rounded-sm bg-white flex items-center justify-center shadow-sm">
+    <img v-if="data.reverso_qr_img" :src="data.reverso_qr_img" class="w-full h-full object-contain" />
+    <div v-else class="w-full h-full bg-gray-50 flex items-center justify-center text-[5px] text-center font-bold font-mono uppercase">
+      QR
+    </div>
+  </div>
+</div>
 
-        <div class="w-full h-[1.8cm] flex items-center justify-between px-6 pb-2">
-          <div class="w-[1.4cm] h-[1.4cm] flex items-center justify-center">
-            <img v-if="data.reverso_sello_img" :src="data.reverso_sello_img" class="w-full h-full object-contain" />
-            <div v-else
-              class="w-full h-full rounded-full border border-dashed border-gray-400 flex items-center justify-center text-[5px] text-gray-400 font-bold">
-              SELLO</div>
-          </div>
+    </div>
+  </div>
 
-          <div class="flex flex-col items-center">
-            <div
-              class="w-[2.2cm] h-[1.1cm] rounded flex items-center justify-center overflow-hidden">
-              <img v-if="data.reverso_firma_img" :src="data.reverso_firma_img" class="w-full h-full object-contain" />
-              <span v-else class="text-[7px] font-black text-gray-500 uppercase tracking-wider font-mono">FIRMA</span>
-            </div>
-          </div>
-        </div>
+  <!-- PIE DE PÁGINA (Espacio para Sello y Firma) -->
+  <div class="w-full h-[1.8cm] flex items-center justify-between px-6 pb-2 relative z-10">
+    <!-- Contenedor del Sello -->
+    <div class="w-[1.4cm] h-[1.4cm] flex items-center justify-center">
+      <img v-if="data.reverso_sello_img" :src="data.reverso_sello_img" class="w-full h-full object-contain" />
+      <div v-else class="w-full h-full rounded-full border border-dashed border-gray-400 flex items-center justify-center text-[5px] text-gray-400 font-bold">
+        SELLO
       </div>
+    </div>
+
+    <!-- Contenedor de la Firma -->
+    <div class="flex flex-col items-center">
+      <div class="w-[2.2cm] h-[1.1cm] rounded flex items-center justify-center overflow-hidden">
+        <img v-if="data.reverso_firma_img" :src="data.reverso_firma_img" class="w-full h-full object-contain" />
+        <span v-else class="text-[7px] font-black text-gray-500 uppercase tracking-wider font-mono">FIRMA</span>
+      </div>
+    </div>
+  </div>
+
+</div>
     </div>
   </div>
 </template>
