@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Services\Sva\SvaService;
 use Illuminate\Http\JsonResponse;
 use Exception;
+use Illuminate\Http\Request;
 
 class SvaController extends Controller
 {
@@ -22,10 +23,10 @@ class SvaController extends Controller
      * @param string $cedula
      * @return JsonResponse
      */
-    public function obtenerPorCedulaSVA($cedula): JsonResponse 
+    public function obtenerPorCedulaSVA(Request $request, $cedula): JsonResponse 
     {
         try {
-            $data = $this->svaService->getPersonaByCedula($cedula);
+            $data = $this->svaService->getPersonaByCedula($request, $cedula);
             return response()->json($data, 200);
             
         } catch (Exception $e) {

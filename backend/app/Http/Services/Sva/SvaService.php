@@ -4,6 +4,7 @@ namespace App\Http\Services\Sva;
 
 use Illuminate\Support\Facades\Http;
 use Exception;
+use Illuminate\Http\Request;
 
 class SvaService
 {
@@ -22,14 +23,18 @@ class SvaService
      * @return array
      * @throws Exception
      */
-    public function getPersonaByCedula(string $cedula): array
+    public function getPersonaByCedula(Request $request, string $cedula)
     {
         if (!$this->svaUrl) {
             throw new Exception('La URL del servidor SVA (SVA_SERVER_URL) no está configurada en el .env.', 500);
         }
+        $tokenSVA = $request->header('svatoken');
 
         // Realizamos la petición HTTP (Ajusta la ruta /api/personas/ si el SVA usa otra)
-        $response = Http::get($this->svaUrl . '/api/personas/' . $cedula);
+        $response = Http::get($this->svaUrl . '/users/c/' . $cedula,[
+            'json' => ['token' => $tokenSVA]
+        ]
+        );
 
         // Si el servidor externo responde con éxito (200-299)
         if ($response->successful()) {
