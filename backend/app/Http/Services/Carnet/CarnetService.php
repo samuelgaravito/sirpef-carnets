@@ -92,6 +92,8 @@ class CarnetService
 
         // Resto del código para la creación de configuraciones InfoCarnet...
         $validator = Validator::make($data, [
+            'texto_superior' => 'nullable|string',
+            'texto_inferior' => 'nullable|string',
             'sello' => 'required|string',
             'firma' => 'nullable|string',
             'imagen_fondo' => 'required|string',

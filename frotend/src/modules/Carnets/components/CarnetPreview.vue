@@ -164,8 +164,6 @@ const fetchLastActiveConfig = async () => {
     const lastActive = configs.filter((c: any) => c.estatus).pop();
 
     if (lastActive) {
-      if (!props.data.reverso_texto_superior) props.data.reverso_texto_superior = lastActive.texto_superior;
-      if (!props.data.reverso_texto_inferior) props.data.reverso_texto_inferior = lastActive.texto_inferior;
       if (!props.data.reverso_sello_img) props.data.reverso_sello_img = lastActive.sello;
       if (!props.data.reverso_firma_img) props.data.reverso_firma_img = lastActive.firma;
       if (!props.data.bg_img) props.data.bg_img = lastActive.imagen_fondo;
