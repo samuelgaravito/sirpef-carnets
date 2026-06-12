@@ -115,20 +115,6 @@
         </div>
       </div>
 
-      <!-- Datos Reverso -->
-      <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
-        <h3 class="text-sm font-bold text-blue-800 border-b pb-1 mb-3 uppercase">Datos Reverso</h3>
-        <div class="space-y-3">
-          <div class="flex flex-col">
-            <label class="text-[10px] font-bold text-gray-500">TEXTO SUPERIOR REVERSO</label>
-            <textarea v-model="form.reverso_texto_superior" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none" rows="3"></textarea>
-          </div>
-          <div class="flex flex-col">
-            <label class="text-[10px] font-bold text-gray-500">TEXTO INFERIOR REVERSO</label>
-            <textarea v-model="form.reverso_texto_inferior" class="border p-2 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none" rows="3"></textarea>
-          </div>
-        </div>
-      </div>
 
       <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
         <h3 class="text-sm font-bold text-blue-800 border-b pb-1 uppercase mb-3">Recursos Reverso</h3>
@@ -227,8 +213,6 @@ const fetchLastConfig = async () => {
     const lastActive = configs.filter((c: any) => c.estatus).pop();
     
     if (lastActive) {
-      props.form.reverso_texto_superior = lastActive.texto_superior;
-      props.form.reverso_texto_inferior = lastActive.texto_inferior;
       props.form.reverso_sello_img = lastActive.sello;
       props.form.reverso_firma_img = lastActive.firma;
       props.form.bg_img = lastActive.imagen_fondo;
@@ -249,8 +233,6 @@ onMounted(() => {
 const saveConfig = async () => {
   try {
     const payload = {
-      texto_superior: props.form.reverso_texto_superior,
-      texto_inferior: props.form.reverso_texto_inferior,
       sello: props.form.reverso_sello_img,
       firma: props.form.reverso_firma_img,
       imagen_fondo: props.form.bg_img,
