@@ -8,8 +8,9 @@ use App\Models\Registro;
 use App\Models\EventoPersona;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB; // <-- Importamos DB para la transacción
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Carbon\Carbon; // Para registrar la fecha de emisión
 use Exception;
 
 class CarnetService
@@ -23,12 +24,12 @@ class CarnetService
     {
         return Registro::with(['eventoPersona.persona'])->latest()->get();
     }
-
-
-
     
     public function create(array $data)
     {
+        // =========================================================================
+        // 1. FLUJO: EMISIÓN DE CARNET A UN SOLICITANTE
+        // =========================================================================
         if (isset($data['solicitante'])) {
             $validator = Validator::make($data, [
                 'solicitante' => 'required|string',
@@ -36,14 +37,12 @@ class CarnetService
                 'cargo' => 'required|string',
                 'oficina' => 'nullable|string',
                 'foto_img' => 'required|string',
-                'imagen_qr' => 'nullable|string'
             ]);
 
             if ($validator->fails()) {
                 throw new Exception($validator->errors()->first());
             }
 
-            // Usamos una transacción para asegurar que los cambios de estatus sean atómicos
             return DB::transaction(function () use ($data) {
                 
                 $persona = Persona::updateOrCreate(
@@ -54,7 +53,6 @@ class CarnetService
                     ]
                 );
 
-                // Nota: Asegúrate de que el 'estatus' aquí cumpla con los CHECK de Postgres si aplica
                 $eventoPersona = EventoPersona::updateOrCreate(
                     [
                         'persona_id' => $persona->id,
@@ -64,33 +62,38 @@ class CarnetService
                 );
 
                 // --- LÓGICA DE DESACTIVACIÓN DEL REGISTRO ANTERIOR ---
-                // Buscamos el último registro que pertenezca a este evento_persona
                 $ultimoRegistro = Registro::where('evento_persona_id', $eventoPersona->id)
+                    ->where('status', 1)
                     ->latest()
                     ->first();
 
-                // Si existe un registro previo, cambiamos su estatus a false (o 0)
                 if ($ultimoRegistro) {
                     $ultimoRegistro->update([
-                        'status' => 0 // Cambiar a false o 'inactivo' según el tipo de dato de tu columna 'status'
+                        'status' => 0 
                     ]);
                 }
                 // -----------------------------------------------------
 
                 $lastInfoCarnet = InfoCarnet::where('estatus', true)->latest()->first();
+                
+                // Procesamos solo la foto del solicitante en disco
                 $fotoPath = $this->saveImage($data['foto_img'], 'carnets/fotos');
 
+                // Guardamos el registro de la emisión (Sin QR por ahora)
                 return Registro::create([
                     'evento_persona_id' => $eventoPersona->id,
                     'info_carnet_id' => $lastInfoCarnet ? $lastInfoCarnet->id : null,
                     'foto_carnet' => $fotoPath,
+                    'emision' => Carbon::now()->toDateString(), // Mantenemos la fecha de emisión
                     'descripcion' => 'Carnet generado para ' . $persona->nombre_completo,
-                    'status' => 1 // El nuevo carnet nace activo
+                    'status' => 1 
                 ]);
             });
         }
 
-        // Resto del código para la creación de configuraciones InfoCarnet...
+        // =========================================================================
+        // 2. FLUJO: CREACIÓN DE CONFIGURACIÓN GENERAL
+        // =========================================================================
         $validator = Validator::make($data, [
             'texto_superior' => 'nullable|string',
             'texto_inferior' => 'nullable|string',
@@ -106,6 +109,11 @@ class CarnetService
             throw new Exception($validator->errors()->first());
         }
 
+        // Blindaje por si el front manda textos vacíos o nulos
+        $data['texto_superior'] = !empty($data['texto_superior']) ? $data['texto_superior'] : ' ';
+        $data['texto_inferior'] = !empty($data['texto_inferior']) ? $data['texto_inferior'] : ' ';
+
+        // Procesamiento de imágenes base de la plantilla de diseño
         $data['sello'] = $this->saveImage($data['sello'], 'carnets/sellos');
         if (!empty($data['firma'])) {
             $data['firma'] = $this->saveImage($data['firma'], 'carnets/firmas');
