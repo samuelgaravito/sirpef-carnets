@@ -6,6 +6,7 @@ use App\Models\InfoCarnet;
 use App\Models\Persona;
 use App\Models\Registro;
 use App\Models\EventoPersona;
+use App\Models\Ministerio; 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class CarnetService
 
     public function getAllRegistros()
     {
-        return Registro::with(['eventoPersona.persona'])->latest()->get();
+        return Registro::with(['evento_persona.persona.ministerio'])->latest()->get();
     }
     
     public function create(array $data)
@@ -35,7 +36,7 @@ class CarnetService
                 'solicitante' => 'required|string',
                 'cedula' => 'required|string',
                 'cargo' => 'required|string',
-                'oficina' => 'nullable|string',
+                'oficina' => 'nullable|string', // Aquí viene el nombre del ministerio seleccionado
                 'foto_img' => 'required|string',
             ]);
 
@@ -45,11 +46,19 @@ class CarnetService
 
             return DB::transaction(function () use ($data) {
                 
+                // 👈 BUSCAMOS EL ID DEL MINISTERIO POR SU NOMBRE
+                $ministerioId = null;
+                if (!empty($data['oficina'])) {
+                    $ministerio = Ministerio::where('nombre', $data['oficina'])->first();
+                    $ministerioId = $ministerio ? $ministerio->id : null;
+                }
+
                 $persona = Persona::updateOrCreate(
                     ['cedula' => $data['cedula']],
                     [
                         'nombre_completo' => $data['solicitante'],
                         'cargo' => $data['cargo'],
+                        'ministerio_id' => $ministerioId, // 👈 GUARDAMOS EL ID ASOCIADO
                     ]
                 );
 
