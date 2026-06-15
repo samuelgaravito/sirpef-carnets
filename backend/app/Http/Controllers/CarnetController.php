@@ -27,6 +27,12 @@ class CarnetController extends Controller
         return response()->json($data);
     }
 
+    public function showRegistro($id)
+    {
+        $data = $this->carnetService->findRegistroById($id);
+        return response()->json($data);
+    }
+
     public function store(Request $request)
     {
         try {

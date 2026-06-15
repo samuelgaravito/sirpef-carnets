@@ -25,6 +25,11 @@ class CarnetService
     {
         return Registro::with(['evento_persona.persona.ministerio'])->latest()->get();
     }
+
+    public function findRegistroById($id)
+    {
+        return Registro::with(['evento_persona.persona.ministerio', 'info_carnet'])->findOrFail($id);
+    }
     
     public function create(array $data)
     {
