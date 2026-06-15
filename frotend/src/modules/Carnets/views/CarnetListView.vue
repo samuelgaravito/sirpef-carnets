@@ -46,7 +46,7 @@
             
             <td class="text-center">
               <div class="flex justify-center gap-3">
-                <button class="text-blue-600 hover:text-blue-800 font-bold flex items-center">
+                <button @click="router.push(`/carnets/ver/${registro.id}`)" class="text-blue-600 hover:text-blue-800 font-bold flex items-center">
                   <font-awesome-icon icon="eye" class="mr-1" />
                   Ver
                 </button>
@@ -69,9 +69,11 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import Welcome from "@/components/sirpef/welcome.vue";
 import Http from "@/utils/Http";
 
+const router = useRouter();
 const carnets = ref([]);
 
 const fetchCarnets = async () => {
