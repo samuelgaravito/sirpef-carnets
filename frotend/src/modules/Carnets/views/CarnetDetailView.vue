@@ -39,7 +39,7 @@ const loading = ref(true);
 const fetchCarnetDetail = async () => {
   try {
     const { id } = route.params;
-    const response = await Http.get(`/api/registro/carnets/registros/${id}`);
+    const response = await Http.get(`/carnets/registros/${id}`);
     const reg = response.data;
     
     // Map the API response to the format expected by CarnetPreview
