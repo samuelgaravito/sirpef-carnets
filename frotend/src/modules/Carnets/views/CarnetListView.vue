@@ -90,7 +90,7 @@
             <button @click="closePreview" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg transition-all">
                 Cerrar
             </button>
-            <button @click="window.print()" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-lg transition-all flex items-center">
+            <button @click="printCarnet" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-lg transition-all flex items-center">
                 <font-awesome-icon icon="print" class="mr-2" />
                 Imprimir
             </button>
@@ -130,6 +130,10 @@ const openPreview = async (id) => {
 const closePreview = () => {
   showModal.value = false;
   selectedCarnetData.value = null;
+};
+
+const printCarnet = () => {
+  window.print();
 };
 
 const fetchCarnets = async () => {
