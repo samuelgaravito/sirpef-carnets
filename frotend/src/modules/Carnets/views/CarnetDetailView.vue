@@ -2,7 +2,6 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import CarnetPreview from "../components/CarnetPreview.vue";
-import CarnetForm from "../components/CarnetForm.vue";
 import Http from "@/utils/Http";
 
 const route = useRoute();
@@ -78,9 +77,36 @@ onMounted(fetchCarnetDetail);
     </div>
 
     <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <!-- Left: Form -->
-      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-inner">
-        <CarnetForm :form="carnetData" />
+      <!-- Left: Data Details -->
+      <div class="bg-gray-50 p-8 rounded-xl border border-gray-200 shadow-inner space-y-6">
+        <h3 class="text-lg font-bold text-blue-800 border-b pb-2 uppercase tracking-wide">Información del Funcionario</h3>
+        
+        <div class="grid grid-cols-1 gap-4">
+          <div class="flex flex-col">
+            <span class="text-[10px] font-bold text-gray-400 uppercase">Nombre Completo</span>
+            <p class="text-sm font-semibold text-gray-800">{{ carnetData.solicitante || '---' }}</p>
+          </div>
+
+          <div class="flex flex-col">
+            <span class="text-[10px] font-bold text-gray-400 uppercase">Cédula de Identidad</span>
+            <p class="text-sm font-semibold text-gray-800">{{ carnetData.cedula || '---' }}</p>
+          </div>
+
+          <div class="flex flex-col">
+            <span class="text-[10px] font-bold text-gray-400 uppercase">Cargo / Función</span>
+            <p class="text-sm font-semibold text-gray-800">{{ carnetData.cargo || '---' }}</p>
+          </div>
+
+          <div class="flex flex-col">
+            <span class="text-[10px] font-bold text-gray-400 uppercase">Oficina / Unidad</span>
+            <p class="text-sm font-semibold text-gray-800">{{ carnetData.oficina || '---' }}</p>
+          </div>
+        </div>
+
+        <div v-if="carnetData.foto_img" class="mt-4">
+          <span class="text-[10px] font-bold text-gray-400 uppercase block mb-2">Fotografía</span>
+          <img :src="carnetData.foto_img" class="w-32 h-40 object-cover rounded-lg border shadow-sm" />
+        </div>
       </div>
 
       <!-- Right: Preview -->
