@@ -57,63 +57,44 @@ onMounted(fetchCarnetDetail);
 
 
 <template>
-  <Navbar />
-  <div class="w-full max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl">
-    <div class="flex justify-between items-center mb-8 border-b pb-4 print:hidden">
-      <h2 class="text-2xl font-bold text-gray-800">Vista Previa de Carnet</h2>
-      <div class="flex gap-4">
-        <button @click="router.back()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition-all">
-          Volver
-        </button>
-        <button @click="printCarnet" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg transition-all flex items-center">
-          <font-awesome-icon icon="print" class="mr-2" />
-          Imprimir
-        </button>
+  <!-- Envoltura de tipo Modal Fijo -->
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 overflow-y-auto modal-impresion">
+    
+    <!-- Caja Blanca del "Modal" -->
+    <div class="bg-white rounded-xl shadow-2xl  w-full p-6 relative modal-caja print:p-0">
+      
+      <!-- Botón X para cerrar (Regresa a la lista quitando el ID de la URL) -->
+      <button @click="router.push('/carnets')" class="absolute top-4 right-4 text-gray-500 hover:text-black text-2xl print:hidden">
+        &times;
+      </button>
+
+      <div class="flex justify-between items-center mb-8 border-b pb-4 print:hidden">
+        <h2 class="text-2xl font-bold text-gray-800">Vista Previa de Carnet</h2>
+        <div class="flex gap-4">
+          <!-- Al hacer clic en Volver, limpiamos la ruta regresando a la lista -->
+          <button @click="router.push('/carnets')" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition-all">
+            Volver
+          </button>
+          <button @click="printCarnet" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg transition-all flex items-center">
+            <font-awesome-icon icon="print" class="mr-2" />
+            Imprimir
+          </button>
+        </div>
       </div>
-    </div>
 
-    <div v-if="loading" class="text-center py-10">
-      <p class="text-gray-500 italic">Cargando datos del carnet...</p>
-    </div>
+      <div v-if="loading" class="text-center py-10">
+        <p class="text-gray-500 italic">Cargando datos del carnet...</p>
+      </div>
 
-    <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <!-- Left: Data Details -->
-      <div class="bg-gray-50 p-8 rounded-xl border border-gray-200 shadow-inner space-y-6">
-        <h3 class="text-lg font-bold text-blue-800 border-b pb-2 uppercase tracking-wide">Información del Funcionario</h3>
+      <div v-else-if="carnetData">
         
-        <div class="grid grid-cols-1 gap-4">
-          <div class="flex flex-col">
-            <span class="text-[10px] font-bold text-gray-400 uppercase">Nombre Completo</span>
-            <p class="text-sm font-semibold text-gray-800">{{ carnetData.solicitante || '---' }}</p>
-          </div>
 
-          <div class="flex flex-col">
-            <span class="text-[10px] font-bold text-gray-400 uppercase">Cédula de Identidad</span>
-            <p class="text-sm font-semibold text-gray-800">{{ carnetData.cedula || '---' }}</p>
-          </div>
-
-          <div class="flex flex-col">
-            <span class="text-[10px] font-bold text-gray-400 uppercase">Cargo / Función</span>
-            <p class="text-sm font-semibold text-gray-800">{{ carnetData.cargo || '---' }}</p>
-          </div>
-
-          <div class="flex flex-col">
-            <span class="text-[10px] font-bold text-gray-400 uppercase">Oficina / Unidad</span>
-            <p class="text-sm font-semibold text-gray-800">{{ carnetData.oficina || '---' }}</p>
-          </div>
-        </div>
-
-        <div v-if="carnetData.foto_img" class="mt-4">
-          <span class="text-[10px] font-bold text-gray-400 uppercase block mb-2">Fotografía</span>
-          <img :src="carnetData.foto_img" class="w-32 h-40 object-cover rounded-lg border shadow-sm" />
+        <div class="mx-auto flex flex-col items-center bg-gray-100 p-6 rounded-xl border border-gray-200 print:bg-transparent print:p-0 print:border-none unique-print-wrapper">
+          <h3 class="text-lg font-bold text-gray-700 mb-6 uppercase tracking-wider border-b-2 border-blue-500 pb-2 print:hidden">Vista Previa Real</h3>
+          <CarnetPreview :data="carnetData" />
         </div>
       </div>
 
-      <!-- Right: Preview -->
-      <div class="flex flex-col items-center bg-gray-100 p-6 rounded-xl border border-gray-200">
-        <h3 class="text-lg font-bold text-gray-700 mb-6 uppercase tracking-wider border-b-2 border-blue-500 pb-2">Vista Previa Real</h3>
-        <CarnetPreview :data="carnetData" />
-      </div>
     </div>
   </div>
 </template>

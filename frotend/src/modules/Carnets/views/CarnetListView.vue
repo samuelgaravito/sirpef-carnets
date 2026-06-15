@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  
   <Welcome title="Listado de Carnets" subtitle="Gestión de carnets emitidos">
     <div class="flex justify-center">
         <router-link to="/carnets/form" class="bg-[#ECA008] hover:bg-[#010c41] text-white font-bold py-3 px-8 rounded-3xl transition-all shadow-lg flex items-center">
@@ -23,8 +23,8 @@
         </thead>
         <tbody>
           <tr v-for="registro in carnets" :key="registro.id">
-            <td class="text-center">{{ registro.evento_persona?.persona?.cedula || registro.evento_persona?.persona?.cedula }}</td>
-            <td class="text-center">{{ registro.evento_persona?.persona?.nombre_completo || registro.evento_persona?.persona?.nombre_completo }}</td>
+            <td class="text-center">{{ registro.evento_persona?.persona?.cedula }}</td>
+            <td class="text-center">{{ registro.evento_persona?.persona?.nombre_completo }}</td>
             <td class="text-center">
               {{ registro.evento_persona?.persona?.ministerio?.nombre || 'No asignado' }}
             </td>
@@ -46,6 +46,7 @@
             
             <td class="text-center">
               <div class="flex justify-center gap-3">
+                <!-- Este router-link ahora levantará la vista de detalle gracias a la ruta hija -->
                 <router-link :to="`/carnets/registros/${registro.id}`" class="text-blue-600 hover:text-blue-800 font-bold flex items-center">
                   <font-awesome-icon icon="eye" class="mr-1" />
                   Ver
@@ -66,15 +67,15 @@
     </div>
   </div>
 
+  <!-- CLAVE: Aquí es donde Vue Router va a "inyectar" tu CarnetDetailView de manera dinámica -->
+  <router-view />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import Welcome from "@/components/sirpef/welcome.vue";
 import Http from "@/utils/Http";
 
-const router = useRouter();
 const carnets = ref([]);
 
 const fetchCarnets = async () => {
