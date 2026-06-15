@@ -7,13 +7,25 @@ import Http from "@/utils/Http";
 
 const route = useRoute();
 const router = useRouter();
-const carnetData = ref(null);
+const carnetData = ref({
+  solicitante: '',
+  cedula: '',
+  cargo: '',
+  oficina: '',
+  foto_img: null,
+  reverso_sello_img: null,
+  reverso_firma_img: null,
+  bg_img: null,
+  footer_img: null,
+  reverso_bg_img: null,
+  reverso_qr_img: null
+});
 const loading = ref(true);
 
 const fetchCarnetDetail = async () => {
   try {
     const { id } = route.params;
-    const response = await Http.get(`/carnets/registros/${id}`);
+    const response = await Http.get(`/api/registro/carnets/registros/${id}`);
     const reg = response.data;
     
     // Map the API response to the format expected by CarnetPreview and CarnetForm
@@ -65,7 +77,7 @@ onMounted(fetchCarnetDetail);
       <p class="text-gray-500 italic">Cargando datos del carnet...</p>
     </div>
 
-    <div v-else-if="carnetData" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <!-- Left: Form -->
       <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-inner">
         <CarnetForm :form="carnetData" />
