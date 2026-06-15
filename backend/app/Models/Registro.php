@@ -33,7 +33,7 @@ class Registro extends Model
     /**
      * Relación: Un registro pertenece a una configuración de diseño InfoCarnet.
      */
-    public function infoCarnet(): BelongsTo
+    public function info_carnet(): BelongsTo
     {
         return $this->belongsTo(InfoCarnet::class, 'info_carnet_id');
     }
