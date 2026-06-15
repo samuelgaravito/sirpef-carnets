@@ -45,7 +45,20 @@
             </td>
             
             <td class="text-center">
-              <button class="text-blue-600 hover:underline font-bold">Ver</button>
+              <div class="flex justify-center gap-3">
+                <button class="text-blue-600 hover:text-blue-800 font-bold flex items-center">
+                  <font-awesome-icon icon="eye" class="mr-1" />
+                  Ver
+                </button>
+                <button class="text-amber-600 hover:text-amber-800 font-bold flex items-center">
+                  <font-awesome-icon icon="edit" class="mr-1" />
+                  Editar
+                </button>
+                <button class="text-red-600 hover:text-red-800 font-bold flex items-center">
+                  <font-awesome-icon icon="trash" class="mr-1" />
+                  Eliminar
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
