@@ -44,12 +44,12 @@ const fetchCarnetDetail = async () => {
     
     // Map the API response to the format expected by CarnetPreview
     carnetData.value = {
-      solicitante: reg.evento_persona?.persona?.nombre_completo,
-      cedula: reg.evento_persona?.persona?.cedula,
-      cargo: reg.evento_persona?.persona?.cargo?.nombre || 'Funcionario',
-      oficina: reg.evento_persona?.persona?.ministerio?.nombre || 'No asignado',
-      foto_img: reg.evento_persona?.persona?.foto,
-      // The rest of the images (bg, footer, etc) are handled by fetchLastActiveConfig in CarnetPreview
+      solicitante: reg.solicitante,
+      cedula: reg.cedula,
+      cargo: reg.cargo,
+      oficina: reg.oficina,
+      foto_img: reg.foto_img,
+      info_carnet: reg.info_carnet
     };
   } catch (error) {
     console.error("Error fetching carnet detail:", error);
