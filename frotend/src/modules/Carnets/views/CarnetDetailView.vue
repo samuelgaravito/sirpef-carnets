@@ -1,42 +1,6 @@
-<template>
-  <Navbar />
-  <div class="w-full max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl">
-    <div class="flex justify-between items-center mb-8 border-b pb-4 print:hidden">
-      <h2 class="text-2xl font-bold text-gray-800">Vista Previa de Carnet</h2>
-      <div class="flex gap-4">
-        <button @click="router.back()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition-all">
-          Volver
-        </button>
-        <button @click="printCarnet" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg transition-all flex items-center">
-          <font-awesome-icon icon="print" class="mr-2" />
-          Imprimir
-        </button>
-      </div>
-    </div>
-
-    <div v-if="loading" class="text-center py-10">
-      <p class="text-gray-500 italic">Cargando datos del carnet...</p>
-    </div>
-
-    <div v-else-if="carnetData" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <!-- Left: Form -->
-      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-inner">
-        <CarnetForm :form="carnetData" />
-      </div>
-
-      <!-- Right: Preview -->
-      <div class="flex flex-col items-center bg-gray-100 p-6 rounded-xl border border-gray-200">
-        <h3 class="text-lg font-bold text-gray-700 mb-6 uppercase tracking-wider border-b-2 border-blue-500 pb-2">Vista Previa Real</h3>
-        <CarnetPreview :data="carnetData" />
-      </div>
-    </div>
-  </div>
-</template>
-
-<script setup>
+<script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import Navbar from "@/components/sirpef/navbar.vue";
 import CarnetPreview from "../components/CarnetPreview.vue";
 import CarnetForm from "../components/CarnetForm.vue";
 import Http from "@/utils/Http";
@@ -79,3 +43,40 @@ const printCarnet = () => {
 
 onMounted(fetchCarnetDetail);
 </script>
+
+
+<template>
+  <Navbar />
+  <div class="w-full max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl">
+    <div class="flex justify-between items-center mb-8 border-b pb-4 print:hidden">
+      <h2 class="text-2xl font-bold text-gray-800">Vista Previa de Carnet</h2>
+      <div class="flex gap-4">
+        <button @click="router.back()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition-all">
+          Volver
+        </button>
+        <button @click="printCarnet" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg transition-all flex items-center">
+          <font-awesome-icon icon="print" class="mr-2" />
+          Imprimir
+        </button>
+      </div>
+    </div>
+
+    <div v-if="loading" class="text-center py-10">
+      <p class="text-gray-500 italic">Cargando datos del carnet...</p>
+    </div>
+
+    <div v-else-if="carnetData" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Left: Form -->
+      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-inner">
+        <CarnetForm :form="carnetData" />
+      </div>
+
+      <!-- Right: Preview -->
+      <div class="flex flex-col items-center bg-gray-100 p-6 rounded-xl border border-gray-200">
+        <h3 class="text-lg font-bold text-gray-700 mb-6 uppercase tracking-wider border-b-2 border-blue-500 pb-2">Vista Previa Real</h3>
+        <CarnetPreview :data="carnetData" />
+      </div>
+    </div>
+  </div>
+</template>
+

@@ -17,7 +17,7 @@
     </div>
 
     <div v-if="activeTab === 'info'" class="space-y-6">
-      <!-- Datos Frontal -->
+      <!-- Datos Frontal @blur="searchSva"-->
       <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
         <h3 class="text-sm font-bold text-blue-800 border-b pb-1 mb-3 uppercase">Datos Frontal</h3>
         <div class="space-y-3">
@@ -182,18 +182,19 @@ const searchSva = async () => {
   
   try {
     const response = await Http.get(`/api/sva/persona/${props.form.cedula}`);
-    const data = response.data;
+    const data = response.data.data;
     
     if (data) {
       // Assuming SVA returns fields like nombre_completo, cargo, and ministerio_id or ente_nombre
-      if (data.nombre_completo) props.form.solicitante = data.nombre_completo;
+      if (data.name) props.form.solicitante = data.name;
       if (data.cargo) props.form.cargo = data.cargo;
       
       // Match the office/ministerio by name if that's what's stored in SVA
-      if (data.ministerio_nombre) {
-          props.form.oficina = data.ministerio_nombre;
-      } else if (data.ente) {
-          props.form.oficina = data.ente;
+      if (data.ministerio_id) {
+        const mini = ministerios.value.find(e => e.id == data.ministerio_id)
+          props.form.oficina = mini ? mini.nombre : '';
+      } else if (data.ministerio_id) {
+          props.form.oficina = data.ministerio_id;
       }
     }
   } catch (error) {

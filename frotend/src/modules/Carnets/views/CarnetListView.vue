@@ -46,7 +46,7 @@
             
             <td class="text-center">
               <div class="flex justify-center gap-3">
-                <router-link :to="`/carnets/view/${registro.id}`" class="text-blue-600 hover:text-blue-800 font-bold flex items-center">
+                <router-link :to="`/carnets/registros/${registro.id}`" class="text-blue-600 hover:text-blue-800 font-bold flex items-center">
                   <font-awesome-icon icon="eye" class="mr-1" />
                   Ver
                 </router-link>

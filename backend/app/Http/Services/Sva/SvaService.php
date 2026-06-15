@@ -31,10 +31,10 @@ class SvaService
         $tokenSVA = $request->header('svatoken');
 
         // Realizamos la petición HTTP (Ajusta la ruta /api/personas/ si el SVA usa otra)
-        $response = Http::get($this->svaUrl . '/users/c/' . $cedula,[
-            'json' => ['token' => $tokenSVA]
-        ]
-        );
+        $response = Http::withHeaders([
+            'svatoken' => $tokenSVA,
+            'Accept'        => 'application/json',
+        ])->get($this->svaUrl . '/users/c/' . $cedula);
 
         // Si el servidor externo responde con éxito (200-299)
         if ($response->successful()) {
