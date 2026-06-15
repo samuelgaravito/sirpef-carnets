@@ -16,6 +16,8 @@
           <tr>
             <th class="text-center">Cédula</th>
             <th class="text-center">Nombre</th>
+            <th class="text-center">Ministerio / Oficina</th>
+            <th class="text-center">Estatus</th>
             <th class="text-center">Acciones</th>
           </tr>
         </thead>
@@ -23,6 +25,25 @@
           <tr v-for="registro in carnets" :key="registro.id">
             <td class="text-center">{{ registro.evento_persona?.persona?.cedula || registro.evento_persona?.persona?.cedula }}</td>
             <td class="text-center">{{ registro.evento_persona?.persona?.nombre_completo || registro.evento_persona?.persona?.nombre_completo }}</td>
+            <td class="text-center">
+              {{ registro.evento_persona?.persona?.ministerio?.nombre || 'No asignado' }}
+            </td>
+
+            <td class="text-center">
+              <span 
+                v-if="registro.status === 1 || registro.status === '1' || registro.status === true" 
+                class="px-2 py-1 text-[10px] font-bold uppercase rounded-full bg-green-100 text-green-800 border border-green-300"
+              >
+                Activo
+              </span>
+              <span 
+                v-else 
+                class="px-2 py-1 text-[10px] font-bold uppercase rounded-full bg-red-100 text-red-800 border border-red-300"
+              >
+                Inactivo
+              </span>
+            </td>
+            
             <td class="text-center">
               <button class="text-blue-600 hover:underline font-bold">Ver</button>
             </td>
