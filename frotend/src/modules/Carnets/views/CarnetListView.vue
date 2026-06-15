@@ -118,19 +118,7 @@ const openPreview = async (id) => {
   showModal.value = true;
   try {
     const response = await Http.get(`/api/registro/carnets/registros/${id}`);
-    const reg = response.data;
-    
-    // Normalize data for CarnetPreview
-    selectedCarnetData.value = {
-      ...reg,
-      solicitante: reg.solicitante,
-      cedula: reg.cedula,
-      cargo: reg.cargo,
-      oficina: reg.oficina,
-      foto_img: reg.foto_img,
-      // info_carnet triggers fetchLastActiveConfig in the child component
-      info_carnet: reg.info_carnet 
-    };
+    selectedCarnetData.value = response.data;
   } catch (error) {
     console.error("Error loading preview:", error);
     showModal.value = false;
