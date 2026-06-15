@@ -18,8 +18,17 @@
       <p class="text-gray-500 italic">Cargando datos del carnet...</p>
     </div>
 
-    <div v-else-if="carnetData" class="flex justify-center">
-      <CarnetPreview :data="carnetData" />
+    <div v-else-if="carnetData" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Left: Form -->
+      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-inner">
+        <CarnetForm :form="carnetData" />
+      </div>
+
+      <!-- Right: Preview -->
+      <div class="flex flex-col items-center bg-gray-100 p-6 rounded-xl border border-gray-200">
+        <h3 class="text-lg font-bold text-gray-700 mb-6 uppercase tracking-wider border-b-2 border-blue-500 pb-2">Vista Previa Real</h3>
+        <CarnetPreview :data="carnetData" />
+      </div>
     </div>
   </div>
 </template>
@@ -29,6 +38,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Navbar from "@/components/sirpef/navbar.vue";
 import CarnetPreview from "../components/CarnetPreview.vue";
+import CarnetForm from "../components/CarnetForm.vue";
 import Http from "@/utils/Http";
 
 const route = useRoute();
@@ -42,14 +52,19 @@ const fetchCarnetDetail = async () => {
     const response = await Http.get(`/carnets/registros/${id}`);
     const reg = response.data;
     
-    // Map the API response to the format expected by CarnetPreview
+    // Map the API response to the format expected by CarnetPreview and CarnetForm
     carnetData.value = {
       solicitante: reg.solicitante,
       cedula: reg.cedula,
       cargo: reg.cargo,
       oficina: reg.oficina,
       foto_img: reg.foto_img,
-      info_carnet: reg.info_carnet
+      reverso_sello_img: reg.info_carnet?.sello,
+      reverso_firma_img: reg.info_carnet?.firma,
+      bg_img: reg.info_carnet?.imagen_fondo,
+      footer_img: reg.info_carnet?.imagen_pie_pagina,
+      reverso_bg_img: reg.info_carnet?.imagen_fondo_reverso,
+      reverso_qr_img: reg.info_carnet?.qr_reverso
     };
   } catch (error) {
     console.error("Error fetching carnet detail:", error);
