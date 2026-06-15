@@ -29,7 +29,7 @@ class CarnetController extends Controller
 
     public function showRegistro($id)
     {
-        $data = $this->carnetService->findRegistroById($id);
+        $data = $this->carnetService->getCarnetPreviewData($id);
         return response()->json($data);
     }
 

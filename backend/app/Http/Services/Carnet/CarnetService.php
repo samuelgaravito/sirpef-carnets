@@ -30,6 +30,19 @@ class CarnetService
     {
         return Registro::with(['evento_persona.persona.ministerio', 'info_carnet'])->findOrFail($id);
     }
+
+    public function getCarnetPreviewData($id)
+    {
+        $reg = $this->findRegistroById($id);
+        return [
+            'solicitante' => $reg->evento_persona->persona->nombre_completo ?? '',
+            'cedula' => $reg->evento_persona->persona->cedula ?? '',
+            'cargo' => $reg->evento_persona->persona->cargo ?? 'Funcionario',
+            'oficina' => $reg->evento_persona->persona->ministerio->nombre ?? 'No asignado',
+            'foto_img' => $reg->foto_carnet ?? ($reg->evento_persona->persona->foto ?? null),
+            'info_carnet' => $reg->info_carnet
+        ];
+    }
     
     public function create(array $data)
     {
