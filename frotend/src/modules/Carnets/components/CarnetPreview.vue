@@ -159,6 +159,18 @@ const formatBulletText = (text: string) => {
 
 const fetchLastActiveConfig = async () => {
   try {
+    // If the data already contains the configuration (from findRegistroById), use it
+    if (props.data.info_carnet) {
+      const config = props.data.info_carnet;
+      if (!props.data.reverso_sello_img) props.data.reverso_sello_img = config.sello;
+      if (!props.data.reverso_firma_img) props.data.reverso_firma_img = config.firma;
+      if (!props.data.bg_img) props.data.bg_img = config.imagen_fondo;
+      if (!props.data.footer_img) props.data.footer_img = config.imagen_pie_pagina;
+      if (!props.data.reverso_bg_img) props.data.reverso_bg_img = config.imagen_fondo_reverso;
+      if (!props.data.reverso_qr_img) props.data.reverso_qr_img = config.qr_reverso;
+      return;
+    }
+
     const response = await Http.get('/api/registro/carnets');
     const configs = response.data;
     const lastActive = configs.filter((c: any) => c.estatus).pop();
