@@ -1,13 +1,5 @@
 <template>
   <div v-if="data" class="flex flex-col items-center">
-    <div class="mb-4 flex items-center gap-4 bg-gray-100 p-2 rounded-lg border print:hidden">
-      <span class="text-xs font-bold text-gray-600 uppercase pl-2">Zoom Vista:</span>
-      <input type="range" v-model="zoom" min="0.5" max="2" step="0.1"
-        class="w-32 h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer" />
-      <span class="text-xs font-mono w-10 text-center">{{ Math.round(zoom * 100) }}%</span>
-      <button @click="zoom = 1"
-        class="text-[10px] bg-white px-2 py-1 border rounded shadow-sm hover:bg-gray-50">Reset</button>
-    </div>
 
     <div
       class="flex flex-row flex-wrap justify-center gap-8 print:gap-0 transition-transform duration-200 origin-top print-area print:block"
@@ -134,7 +126,7 @@
 import { ref, onMounted } from 'vue';
 import Http from '@/utils/Http';
 
-const zoom = ref(2);
+const zoom = ref(1.7);
 
 const props = defineProps({
   data: {
